@@ -1,0 +1,41 @@
+.square {
+    width: 300px;
+    height: 250px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: rgb(0, 0, 0);
+    font-family: "Bahnschrift";
+    margin-left: 20px;
+    border: 1px solid black;
+  }
+  
+  .square:not(:last-child) {
+    margin-right: 40px;
+  }
+  .rect {
+    width: 299px;
+    height: 26px;
+    background-color:rgba(65, 154, 65, 0.918);
+    color: white;
+    font-family: "Bahnschrift SemiBold";
+    padding-left: 10px;
+    padding-top: 5px;
+  }
+  #inp1{
+    height: 27px;
+    width: 184px;
+    background-color: #adadad;
+    font-family: "Bahnschrift SemiBold";
+    margin-left: 10px;
+  }
+  
+  .form-control {
+    height: 20px;
+    width: 140px;
+    border: 1px solid black;
+  }
+  .form-control:focus {
+    outline: none;
+    box-shadow: 0 0 3px black;
+    border: 1px solid black;
+  }
