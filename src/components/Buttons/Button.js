@@ -4,7 +4,7 @@ class Button extends Component {
   
   render() {
     return (
-  <section><button className="btn">Apply SSU Rollout Policy</button></section>
+  <section><button type="button" className="btn btn-danger">Apply SSU Rollout Policy</button></section>
 
   );
 }

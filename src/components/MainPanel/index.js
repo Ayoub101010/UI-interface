@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Square1 from './Square1';
-import Square2 from './Square2';
-import Square3 from './Square3';
-import Square4 from './Square4';
-import Square5 from './Square5';
-import Button from './Button';
-import Square6 from './Square6';
+import Square1 from '../PercentageSettings/index';
+import Square2 from '../ModelSettings/index';
+import Square3 from '../GeoSettings/index';
+import Square4 from '../ScheduleSettings/index';
+import Square5 from '../UpgradeStatistics/index';
+import Button from '../Buttons/Button';
+import Square6 from '../PresetGroups/index';
 class SquareContainer extends Component {
     render() {
       return (
