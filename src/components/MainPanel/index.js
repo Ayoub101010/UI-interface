@@ -1,30 +1,26 @@
-import React, { Component } from "react";
-import Square1 from '../PercentageSettings/index';
-import Square2 from '../ModelSettings/index';
-import Square3 from '../GeoSettings/index';
-import Square4 from '../ScheduleSettings/index';
-import Square5 from '../UpgradeStatistics/index';
+import React from "react";
+import PercentageSettings from '../PercentageSettings/index';
+import ModelSettings from '../ModelSettings/index';
+import GeoSettings from '../GeoSettings/index';
+import ScheduleSettings from '../ScheduleSettings/index';
+import UpgradeStatistics from '../UpgradeStatistics/index';
 import Button from '../Buttons/Button';
-import Square6 from '../PresetGroups/index';
-class SquareContainer extends Component {
-    render() {
-      return (
-        <section>
-          <div className="square-container">
-        
-            <Square1 />
-            <Square2 />
-            <Square3/>
-            <Square4/>
-            <Square5/>
-            <Button/>
-            <Square6/>
-          
-         
-          </div>
-        </section>
-      );
-    }
-  }
-  
-  export default SquareContainer;
+import PresetGroups from '../PresetGroups/index';
+
+function MainPanel() {
+  return (
+    <section>
+      <div className="square-container">
+        <PercentageSettings />
+        <ModelSettings />
+        <GeoSettings />
+        <ScheduleSettings />
+        <UpgradeStatistics />
+        <Button />
+        <PresetGroups />
+      </div>
+    </section>
+  );
+}
+
+export default MainPanel;

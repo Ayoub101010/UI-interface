@@ -13,14 +13,14 @@ import "./components/PresetGroups/PresetGroups.css";
 
 import Header from './components/NavBar/header';
 import Body from './components/Body/body';
-import SquareContainer from './components/MainPanel/index';
+import MainPanel from './components/MainPanel/index';
 
 
 const App = () => (
     <div className="hey">
         <Header/>
         <Body/>
-        <SquareContainer/>
+        <MainPanel/>
         
     </div>
 )
