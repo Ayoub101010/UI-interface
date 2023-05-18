@@ -1,20 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/styles.css'
+
+import "./components/MainPanel/MainPanel.css";
+import "./components/PercentageSettings/PercentageSettings.css";
+import "./components/ModelSettings/ModelSettings.css";
+import "./components/GeoSettings/GeoSettings.css";
+import "./components/NavBar/NavBar.css";
+import "./components/Body/Body.css";
+import "./components/ScheduleSettings/ScheduleSettings.css";
+import "./components/UpgradeStatistics/UpgradeStatistics.css";
+import "./components/PresetGroups/PresetGroups.css";
 
 
-import Header from './components/header';
-import Body from './components/body';
-import SquareContainer from './components/SquareContainer';
-import Button from './components/Button';
-
+import Body from './components/Body/body';
+import MainPanel from './components/MainPanel/index';
+import NavBar from './components/NavBar/NavBar';
 
 
 const App = () => (
-    <div className="hey">
-        <Header/>
+    <div>
+        <NavBar/>
         <Body/>
-        <SquareContainer/>
+        <MainPanel/>
         
     </div>
 )

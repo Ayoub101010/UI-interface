@@ -1,0 +1,37 @@
+.square6 {
+    width:  400px;
+    height: 120px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    font-family: "Bahnschrift";
+    margin-left: -1350px;
+    margin-top: 360px;
+    border: 1px solid black;
+  }
+  .rect6 {
+    width: 398,8px;
+    height: 26px;
+    background-color:rgba(65, 154, 65, 0.918);
+    color: white;
+    font-family: "Bahnschrift SemiBold";
+    padding-left: 10px;
+    padding-top: 5px;
+  }
+  #inp2{
+    height: 29px;
+    width: 240px;
+    background-color: #adadad;
+    font-family: "Bahnschrift SemiBold";
+    margin-top: -30px;
+    margin-left: 10px;
+  
+  }
+  #Btn {
+    border-radius: 3px;
+    margin-right: 15px;
+    width: 120px;
+    height: 30px;
+    font-family: "Bahnschrift SemiBold";
+    float: right;
+    margin-top: -30px;
+  }
