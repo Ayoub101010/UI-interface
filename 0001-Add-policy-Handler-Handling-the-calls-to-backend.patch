@@ -1,0 +1,96 @@
+From 662491884f9ae53b6345bff490f7b79549592f99 Mon Sep 17 00:00:00 2001
+From: Mohammed Dahdouh <mohammed.dahdouh@oregan.net>
+Date: Sun, 14 May 2023 00:01:08 +0100
+Subject: [PATCH 1/2] Add policy Handler: Handling the calls to backend
+
+---
+ src/components/Buttons/Button.js | 46 +++++++++++++++-----
+ src/services/policyHandler.js    | 75 ++++++++++++++++++++++++++++++++
+ 2 files changed, 110 insertions(+), 11 deletions(-)
+ create mode 100644 src/services/policyHandler.js
+
+diff --git a/src/services/policyHandler.js b/src/services/policyHandler.js
+new file mode 100644
+index 0000000..612ca32
+--- /dev/null
++++ b/src/services/policyHandler.js
+@@ -0,0 +1,75 @@
++const DEVICE_CONTROL_CENTER = 'https://34.173.231.180:8051'
++const REST_API_ENUM_PROPERTIES = '/api/policy/admin/v1/properties/enum'
++const REST_API_SET_PROPERTIES = '/api/policy/admin/v1/properties/set'
++const REST_API_DELETE_PROPERTIES = "/api/policy/admin/v1/properties/delete";
++/**
++ * Get All Proporties
++ * @param {*} 
++ */
++export async function getAllProperties() {
++  console.log('run getAllProperties')
++  const response = await fetch(
++    DEVICE_CONTROL_CENTER + REST_API_ENUM_PROPERTIES,
++    {
++      method: 'POST',
++      mode: 'same-origin', // no-cors, *cors, same-origin
++      headers: {
++        'Content-Type': 'application/json;charset=utf-8',
++        // 'Content-Type': 'application/x-www-form-urlencoded',
++      },
++      redirect: 'follow', // manual, *follow, error
++      body: '{\n}',
++    }
++  )
++  const jsonData = await response.json()
++  console.log(jsonData)
++  return jsonData
++}
++
++/**
++ * Set a property value
++ * @param {object} prop Object containing property value to be set
++ */
++export async function setProperty(prop) {
++  console.log('run setProperty' )
++  const response = await fetch(
++    DEVICE_CONTROL_CENTER + REST_API_SET_PROPERTIES,
++    {
++      method: 'POST',
++      mode: 'same-origin', // no-cors, *cors, same-origin
++      headers: {
++        'Content-Type': 'application/json;charset=utf-8',
++      },
++      redirect: 'follow', // manual, *follow, error
++      body: JSON.stringify([prop], null, 2)
++    }
++  )
++  const jsonData = await response.json()
++  console.log(jsonData)
++  return jsonData
++}
++
++/**
++ * Delete a property value
++ * @param {object} prop Object containing property value to be set
++ */
++export async function deleteProperty(prop) {
++  console.log('run setProperty' )
++  const response = await fetch(
++    DEVICE_CONTROL_CENTER + REST_API_DELETE_PROPERTIES,
++    {
++      method: 'POST',
++      mode: 'same-origin', // no-cors, *cors, same-origin
++      headers: {
++        'Content-Type': 'application/json;charset=utf-8',
++      },
++      redirect: 'follow', // manual, *follow, error
++      body: JSON.stringify([prop], null, 2)
++    }
++  )
++  const jsonData = await response.json()
++  console.log(jsonData)
++  return jsonData
++}
++
++// To do Add Delete function.
+\ No newline at end of file
+-- 
+2.25.1
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import "./components/Buttons/buttons.css";
-import "./components/MainPanel/SquareContainer.css";
+
+import "./components/MainPanel/MainPanel.css";
 import "./components/PercentageSettings/PercentageSettings.css";
 import "./components/ModelSettings/ModelSettings.css";
 import "./components/GeoSettings/GeoSettings.css";
@@ -11,14 +11,15 @@ import "./components/ScheduleSettings/ScheduleSettings.css";
 import "./components/UpgradeStatistics/UpgradeStatistics.css";
 import "./components/PresetGroups/PresetGroups.css";
 
-import Header from './components/NavBar/header';
+
 import Body from './components/Body/body';
 import MainPanel from './components/MainPanel/index';
+import NavBar from './components/NavBar/NavBar';
 
 
 const App = () => (
-    <div className="hey">
-        <Header/>
+    <div>
+        <NavBar/>
         <Body/>
         <MainPanel/>
         
