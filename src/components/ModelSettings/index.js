@@ -8,15 +8,17 @@ function ModelSettings({ onModelChange, selectedModels }) {
     if (isChecked) {
       onModelChange([...selectedModels, modelName]);
     } else {
-      const updatedModels = selectedModels.filter((model) => model !== modelName);
+      const updatedModels = selectedModels.filter(
+        (model) => model !== modelName
+      );
       onModelChange(updatedModels);
     }
   };
 
   const models = [
-    { name: "Technicolor DCI", id: "model1" },
-    { name: "Skyworth MBOX", id: "model2" },
-    { name: "Cisco PDS", id: "model3" },
+    { name: "DCI", id: "DCI" },
+    { name: "MBOX", id: "MBOX" },
+    { name: "PDS", id: "PDS" },
   ];
 
   return (
@@ -40,7 +42,8 @@ function ModelSettings({ onModelChange, selectedModels }) {
                 {model.name}
               </label>
             </div>
-            {index < models.length - 1 && <br />} {/* Ajoute un saut de ligne entre chaque modèle*/}
+            {index < models.length - 1 && <br />}{" "}
+            {/* Ajoute un saut de ligne entre chaque modèle*/}
           </React.Fragment>
         ))}
       </div>
@@ -49,4 +52,3 @@ function ModelSettings({ onModelChange, selectedModels }) {
 }
 
 export default ModelSettings;
-
