@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
+import RadioButtons from "../Radiobutton";
 
 function ScheduleSettings() {
+  const [selectedOption, setSelectedOption] = useState("");
+
+  // Handle change event when a radio button is selected
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
   return (
     <section>
       <div className="Square4">
         <div className="rect4">Scheduled Update Time</div>
         <br />
-        <label className="square-checkbox-label">
+        <label className="radio-label">
           &nbsp;&nbsp;
-          <input type="radio" className="square-checkbox-input" /> As soon as
-          DVB-SSU received
+          <input
+            type="radio"
+            className="radio-input"
+            name="options"
+            value="option1"
+            checked={selectedOption === "option1"}
+            onChange={handleOptionChange}
+          />{" "}
+          As soon as DVB-SSU received
         </label>
         <br />
         <br />
-        <label className="square-checkbox-label">
+        <label className="radio-label">
           &nbsp;&nbsp;
-          <input type="radio" className="square-checkbox-input" /> Not before
+          <input
+            type="radio"
+            className="radio-input"
+            name="options"
+            value="option2"
+            checked={selectedOption === "option1"}
+            onChange={handleOptionChange}
+          />{" "}
+          Not before
           <select className="date">
             <option value="">--Select a date--</option>
             <option value="29 Apr 2023">29 Apr 2023</option>
