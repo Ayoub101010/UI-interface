@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import RadioButtons from "../Radiobutton";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function ScheduleSettings() {
+  // Add calendar
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   const [selectedOption, setSelectedOption] = useState("");
 
   // Handle change event when a radio button is selected
@@ -37,12 +45,16 @@ function ScheduleSettings() {
             checked={selectedOption === "option1"}
             onChange={handleOptionChange}
           />{" "}
-          Not before
-          <select className="date">
-            <option value="">--Select a date--</option>
-            <option value="29 Apr 2023">29 Apr 2023</option>
-            <option value="30 Apr 2023">30 Apr 2023</option>
-          </select>
+          Not before{" "}
+          <div>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              dateFormat="dd/MM/yyyy"
+              showPopperArrow={false}
+              customInput={<button className="date">select a date</button>}
+            />
+          </div>
         </label>
 
         <p>
