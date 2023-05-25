@@ -1,6 +1,6 @@
 import React from "react";
 
-function GeoSettings({ selectedCity, onCityChange }) {
+function GeoSettings({ selectedCities, onCityChange }) {
   const cities = [
     { name: "Guadalajara", id: "city1" },
     { name: "Mexico City", id: "city2" },
@@ -15,9 +15,9 @@ function GeoSettings({ selectedCity, onCityChange }) {
     const isChecked = event.target.checked;
 
     if (isChecked) {
-      onCityChange([...selectedCity, cityName]);
+      onCityChange([...selectedCities, cityName]);
     } else {
-      const updatedCities = selectedCity.filter((city) => city !== cityName);
+      const updatedCities = selectedCities.filter((city) => city !== cityName);
       onCityChange(updatedCities);
     }
   };
@@ -37,7 +37,7 @@ function GeoSettings({ selectedCity, onCityChange }) {
                   className="form-check-input"
                   id={city.id}
                   name={city.name}
-                  checked={selectedCity.includes(city.name)}
+                  checked={selectedCities.includes(city.name)}
                   onChange={handleCityChange}
                 />
                 <label className="form-check-label square-checkbox" htmlFor={city.id}>
