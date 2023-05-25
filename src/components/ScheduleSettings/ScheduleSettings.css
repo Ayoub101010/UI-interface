@@ -18,44 +18,45 @@
     padding-top: 5px;
   }
   .date{
-    width: 150px;
-    border: 1px solid black;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
+    width: 120px;
+   
+   
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='grey' d='M1 2.25L4 5.25L7 2.25H1Z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position-x: calc(100% - 5px);
     background-position-y: center;
-    background-color: #adadad;
     color: rgb(0, 0, 0);
     padding: 2px 10px 2px 2px;
-    font-family: "Bahnschrift SemiBold";
-    margin-left: 130px;
+    margin-left: 169px;
     position: relative;
     top: -25px;
     height: 25px;
     border-radius: 2px;
 }
-.Hrs{
-  width: 150px;
-    border: 1px solid black;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='grey' d='M1 2.25L4 5.25L7 2.25H1Z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position-x: calc(100% - 5px);
-    background-position-y: center;
-    background-color: #adadad;
-    color: rgb(0, 0, 0);
+.begHrs{
+  
     padding: 2px 10px 2px 2px;
-    font-family: "Bahnschrift SemiBold";
     margin-left: 170px;
     position: relative;
     top: -130px;
     height: 25px;
-    border-radius: 2px;
- 
+}
+.calendar{
+
+  margin-left: 20px;
+  position: relative;
+  top: 60px;
 
 }
+.endHrs{
+  padding: 2px 10px 2px 2px;
+  margin-left: 170px;
+  position: relative;
+  top: -160px;
+  height: 25px
+}
+
+.datepicker {
+  width: 80px;
+}
+

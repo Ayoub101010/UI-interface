@@ -14,6 +14,7 @@ import {
 
 function MainPanel() {
   const [config, setConfig] = useState({
+    sw_version: 136,
     coverage: 1,
     models: ["DCI", "MBOX", "PDS"],
     cities: [

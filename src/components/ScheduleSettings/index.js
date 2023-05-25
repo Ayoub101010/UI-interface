@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
 
 function ScheduleSettings() {
-  // Add calendar
-  const [selectedDate, setSelectedDate] = useState(null);
+  // Add Time selector
+  const [selectedTime, setSelectedTime] = useState("10:00");
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+  const [notBeforeDate, setNotBeforeDate] = useState(new Date());
+  // Add calendar
 
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -42,39 +43,42 @@ function ScheduleSettings() {
             className="radio-input"
             name="options"
             value="option2"
-            checked={selectedOption === "option1"}
+            checked={selectedOption === "option2"}
             onChange={handleOptionChange}
           />{" "}
           Not before{" "}
-          <div>
+          <div className="date">
             <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              dateFormat="dd/MM/yyyy"
-              showPopperArrow={false}
-              customInput={<button className="date">select a date</button>}
+              wrapperClassName="datepicker"
+              selected={notBeforeDate}
+              onChange={(date) => setNotBeforeDate(date)}
             />
           </div>
         </label>
-
         <p>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Permitted
           <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upgrade Hours
         </p>
+        <br></br>
+        <br></br>
+        <div className="begHrs">
+          <TimePicker
+            value={selectedTime}
+            onChange={(time) => setSelectedTime(time)}
+            disableClock
+            customInput={<button>00:00 UTC</button>}
+          />
+        </div>
+        {} <br />
         <br />
-        <br />
-        <select className="Hrs">
-          <option value="">00.00 MEX</option>
-          <option>--</option>
-          <option>--</option>
-        </select>
-        <br />
-        <br />
-        <select className="Hrs">
-          <option value="">00.00 MEX</option>
-          <option value="29 Apr 2023">--</option>
-          <option value="30 Apr 2023">--</option>
-        </select>
+        <div className="endHrs">
+          <TimePicker
+            value={selectedTime}
+            onChange={(time) => setSelectedTime(time)}
+            disableClock
+            customInput={<button>00:00 UTC</button>}
+          />
+        </div>
       </div>
     </section>
   );
