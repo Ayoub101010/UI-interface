@@ -4,7 +4,7 @@ body {
 }
 .Group{
    
-    margin-left: 25px;
+    margin-left: 36px;
     background-color:#adadad;
     color: rgb(0, 0, 0);
     padding: 2px 10px 2px 2px;
@@ -22,11 +22,13 @@ body {
     font-family: "Bahnschrift SemiBold";
     border-radius: 5px;
   }
-  #Dep-Rel{
-    width: 220px;
-    height: 28px;
-    font-family: 30px "Bahnschrift SemiBold" solid ;
-    margin-left: 20px;
+  #Dep-Rel {
+ 
+    font-weight: bold;
+    
+    font-family: "Bahnschrift SemiBold";
+    font-size: 20px;
+    margin-left: 39px;
     text-align: left;
     border-radius: 5px;
   }
@@ -34,7 +36,14 @@ body {
   
   section h2 {
     font-family: 30px "Bahnschrift SemiBold" solid ;
-    
     color: rgb(0, 0, 0);
     margin-left: 38px;
+  }
+  #Version{
+    width: 50px;
+    height: 25px;
+    font-family: 30px "Bahnschrift SemiBold" solid ;
+    margin-left: 6px;
+    text-align: center;
+   
   }

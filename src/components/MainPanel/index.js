@@ -4,77 +4,82 @@ import ModelSettings from '../ModelSettings/index';
 import GeoSettings from '../GeoSettings/index';
 import ScheduleSettings from '../ScheduleSettings/index';
 import UpgradeStatistics from '../UpgradeStatistics/index';
+import { generateProps }  from '../../services/policyutils';
+
 
 import PresetGroups from '../PresetGroups/index';
 import { getAllProperties, setProperty, deleteProperty } from '../../services/policyHandler';
 
 function MainPanel() {
-  const [property, settoto] = useState({
-    coverage: 1,
-    coverage_seed: 0,
-    filter: {
-      group: {
-        group1: '1',
-      },
-    },
-    key: 'Test::Enable',
-    ns: 'ada',
-    value: '2',
-    city: [],
-    model: [],
-  });
+  
+const [config, setConfig] = useState({
+  sw_version: "126",
+  coverage: 1,
+  cities: ["Guadalajara", "Mexico City", "Salamanca", "Torreon", "Los Mochis", "Cancun"],
+  models: ["DCI", "MBOX", "PCI"],
+  not_before: null,
+  permitted_hours: {
+    start: "02:00:00",
+    end: "08:00:00",
+  },
+});
+const onPercentageChange = (evt) => {
+  const { value } = evt.target;
+  console.log('mainPanel onPercentageChange value: ' + value);
+  setConfig((prevState) => ({
+    ...prevState,
+    coverage: value / 100,
+  }));
+};
 
-  const onPercentageChange = (evt) => {
-    const { value } = evt.target;
-    console.log('mainPanel onPercentageChange value: ' + value);
-    settoto((prevState) => ({
-      ...prevState,
-      coverage: value / 100,
-    }));
-  };
+const onCityChange = (selectedCities) => {
+  console.log('mainPanel onCityChange selectedCities: ', selectedCities);
+  setConfig((prevState) => ({
+    ...prevState,
+    cities: selectedCities,
+  }));
+  
+};
 
-  const onCityChange = (selectedCity) => { // Fonction appelée lorsqu'une nouvelle ville est sélectionnée dans "ModelSettings"
-    console.log('mainPanel onCityChange selectedCity: ' + selectedCity);
-    settoto((prevState) => ({
-      ...prevState,
-      city: selectedCity,
+const onModelChange = (selectedModels) => {
+  console.log('mainPanel onModelChange selectedModels:', selectedModels);
+  setConfig((prevState) => ({
+    ...prevState,
+    models: selectedModels,
+  }));
+ 
+};
 
-    }));
-    console.log('City in property:', city);
-  };
-  const onModelChange = (selectedModels) => {
-    console.log('mainPanel onModelChange selectedModels:', selectedModels);
-    settoto((prevState) => ({
-      ...prevState,
-      model: selectedModels,
-    }));
-    console.log('Models in property:', property.model);
-  };
+const onClick = () => {
+  console.log('onClick');
+  console.log(config);
+  config.tag = Date.now(); // Unix timestamp in milliseconds
+  const properties = []
+  properties.push(...generateProps(config))
+  console.log(properties)
+  
+  
+ 
+  try {
+    // getAllProperties()
+    setProperty(properties);
+    // deleteProperty(testProp)
+    console.log('onClick done');
+  } catch (error) {
+    console.log('call failed');
+  }
+};
 
-  const onClick = () => {
-    console.log('onClick');
-    console.log(property);
-
-    try {
-      // getAllProperties()
-      setProperty(property);
-      // deleteProperty(testProp)
-      console.log('onClick done');
-    } catch (error) {
-      console.log('call failed');
-    }
-  };
-
-  const coverage = property.coverage;
-  const city = property.city;
-  const model = property.model;
+const coverage = config.coverage;
+const cities = config.cities;
+const models = config.models;
 
   return (
     <section>
       <div className="square-container">
         <PercentageSettings coverage={coverage * 100} onChange={onPercentageChange} />
-        <ModelSettings onModelChange={onModelChange} selectedModels={model}  /> 
-        <GeoSettings onCityChange={onCityChange} selectedCity={city}  />{/* Passage de la fonction de rappel onCityChange à GeoSettings */}
+        <ModelSettings onModelChange={onModelChange} selectedModels={models} />
+        <GeoSettings onCityChange={onCityChange} selectedCities={cities} />
         <ScheduleSettings />
         <UpgradeStatistics />
         <button type='button' className='btn btn-danger' onClick={onClick}>
@@ -87,3 +92,4 @@ function MainPanel() {
 }
 
 export default MainPanel;
+
