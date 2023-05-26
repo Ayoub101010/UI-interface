@@ -7,7 +7,7 @@ function GeoSettings({ selectedCities, onCityChange }) {
     { name: "Salamanca", id: "city3" },
     { name: "Torreon", id: "city4" },
     { name: "Los Mochis", id: "city5" },
-    { name: "Cancun", id: "city6" }
+    { name: "Cancun", id: "city6" },
   ];
 
   const handleCityChange = (event) => {
@@ -40,7 +40,10 @@ function GeoSettings({ selectedCities, onCityChange }) {
                   checked={selectedCities.includes(city.name)}
                   onChange={handleCityChange}
                 />
-                <label className="form-check-label square-checkbox" htmlFor={city.id}>
+                <label
+                  className="form-check-label square-checkbox"
+                  htmlFor={city.id}
+                >
                   {city.name}
                 </label>
               </div>

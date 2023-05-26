@@ -1,6 +1,5 @@
 import React from "react";
 
-
 function PercentageSettings(props) {
   return (
     <section>
@@ -8,9 +7,16 @@ function PercentageSettings(props) {
         <div className="rect">Percentage of Total Devices</div>
         <br />
         <p>&nbsp;&nbsp;Enter % of total devices to deploy:</p>
-        <input type='text'id='inp1'name='coverage'className='form-control'placeholder='Enter your percentage'value={props.coverage}
-         onChange={props.onChange}/>
-          
+        <input
+          type="text"
+          id="inp1"
+          name="coverage"
+          className="form-control"
+          placeholder="Enter your percentage"
+          value={props.coverage}
+          onChange={props.onChange}
+        />
+
         <br />
         <p>&nbsp;&nbsp;Estimated number of devices:</p>
         <p>
@@ -22,4 +28,3 @@ function PercentageSettings(props) {
 }
 
 export default PercentageSettings;
-

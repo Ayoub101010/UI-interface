@@ -1,9 +1,8 @@
 header {
-
-    text-align: center;
-    height: 60px;
+  text-align: center;
+  height: 60px;
 }
-a{
+a {
   text-decoration: none;
 }
 a:focus,
@@ -13,27 +12,27 @@ a:hover {
 }
 
 ul {
-    font-family: "Bahnschrift";
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #adadad;
-  }
-  
-  li {
-    float: left;
-    margin-left: 10px;
-  }
-  li:hover a {
-    border-bottom: 3px solid rgb(42, 169, 42);
-    padding-bottom: 5px;
-    border-radius: 3px;
-  }
-  li a {
-    display: block;
-    color: rgb(0, 0, 0);
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
+  font-family: "Bahnschrift";
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #adadad;
+}
+
+li {
+  float: left;
+  margin-left: 10px;
+}
+li:hover a {
+  border-bottom: 3px solid rgb(42, 169, 42);
+  padding-bottom: 5px;
+  border-radius: 3px;
+}
+li a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}

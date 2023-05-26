@@ -1,7 +1,4 @@
-import { getCities,getModels } from './dataUtils';
-
-
-
+import { getCities, getModels } from "./dataUtils";
 
 const getOtaProps = (config) => {
   const props = [];

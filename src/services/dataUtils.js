@@ -1,6 +1,13 @@
 export const getCities = () => {
   // Code pour obtenir la liste des villes
-  const cities = ["Guadalajara", "Mexico City", "Salamanca", "Torreon", "Los Mochis", "Cancun"];
+  const cities = [
+    "Guadalajara",
+    "Mexico City",
+    "Salamanca",
+    "Torreon",
+    "Los Mochis",
+    "Cancun",
+  ];
   return cities;
 };
 
@@ -14,5 +21,3 @@ export const getSoftwareVersion = () => {
   const softwareVersion = "126";
   return softwareVersion;
 };
-
-  
