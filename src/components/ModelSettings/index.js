@@ -17,9 +17,9 @@ function ModelSettings({ onModelChange, selectedModels }) {
   };
 
   const models = [
-    { name: "DCI", id: "DCI" },
-    { name: "MBOX", id: "MBOX" },
-    { name: "PDS", id: "PDS" },
+    { name: "MBOXH4", id: "MBOXH4" },
+    { name: "747MEG", id: "747MEG" },
+    { name: "PDS2140", id: "PDS2140" },
   ];
 
   return (

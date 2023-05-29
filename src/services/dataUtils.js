@@ -13,7 +13,7 @@ export const getCities = () => {
 
 export const getModels = () => {
   // Code pour obtenir la liste des modèles
-  const models = ["DCI", "MBOX", "PCI"];
+  const models = ["MBOXH4", "747MEG", "PDS2140"];
   return models;
 };
 
