@@ -16,47 +16,62 @@ function ScheduleSettings({ onScheduleChange }) {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    const isChecked = event.target.value === "immediate";
-    console.log("Selected Option is : ", isChecked);
+    const utcStartTime = moment(selectedStartTime, "HH:mm")
+      .utc()
+      .format("HH:mm");
+    const utcEndTime = moment(selectedEndTime, "HH:mm").utc().format("HH:mm");
     onScheduleChange({
-      not_before: isChecked ? null : notBeforeDate.toString(),
+      not_before:
+        selectedOption === "immediate" ? null : notBeforeDate.toString(),
       permitted_hours: {
-        start: selectedStartTime,
-        end: selectedEndTime,
+        start: utcStartTime,
+        end: utcEndTime,
       },
     });
   };
 
   const onDateChange = (date) => {
     setNotBeforeDate(date);
+    const utcStartTime = moment(selectedStartTime, "HH:mm")
+      .utc()
+      .format("HH:mm");
+    const utcEndTime = moment(selectedEndTime, "HH:mm").utc().format("HH:mm");
     onScheduleChange({
-      not_before: selectedOption === "scheduled" ? null : date.toString(),
+      not_before: selectedOption === "immediate" ? null : date.toString(),
       permitted_hours: {
-        start: selectedStartTime,
-        end: selectedEndTime,
+        start: utcStartTime,
+        end: utcEndTime,
       },
     });
   };
 
   const onStartTimeChange = (time) => {
+    const utcStartTime = moment(time, "HH:mm").utc().format("HH:mm");
+    const utcEndTime = moment(selectedEndTime, "HH:mm").utc().format("HH:mm");
+
     setSelectedStartTime(time);
     onScheduleChange({
       not_before:
-        selectedOption === "scheduled" ? null : notBeforeDate.toString(),
+        selectedOption === "immediate" ? null : notBeforeDate.toString(),
       permitted_hours: {
-        start: time,
-        end: selectedEndTime,
+        start: utcStartTime,
+        end: utcEndTime,
       },
     });
   };
   const onEndTimeChange = (time) => {
+    const utcStartTime = moment(selectedStartTime, "HH:mm")
+      .utc()
+      .format("HH:mm");
+    const utcEndTime = moment(time, "HH:mm").utc().format("HH:mm");
+
     setSelectedEndTime(time);
     onScheduleChange({
       not_before:
-        selectedOption === "scheduled" ? null : notBeforeDate.toString(),
+        selectedOption === "immediate" ? null : notBeforeDate.toString(),
       permitted_hours: {
-        start: selectedStartTime,
-        end: time,
+        start: utcStartTime,
+        end: utcEndTime,
       },
     });
   };

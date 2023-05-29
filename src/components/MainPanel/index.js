@@ -25,7 +25,7 @@ function MainPanel() {
       "Los Mochis",
       "Cancun",
     ],
-    not_before: " ",
+    not_before: null,
     permitted_hours: {
       start: "02:00:00",
       end: "08:00:00",
