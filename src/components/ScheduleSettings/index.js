@@ -3,21 +3,92 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
+<<<<<<< HEAD
 import "./ScheduleSettings.css";
+=======
+import moment from "moment";
+>>>>>>> 00e86b4 (Include ScheduleSettings in the MainPanel)
 
-function ScheduleSettings() {
-  // Add Time selector
-  const [selectedTime, setSelectedTime] = useState("10:00");
-
+function ScheduleSettings({ onScheduleChange }) {
+  // values :
+  //  "immediate" = as soon as DVD-SSU received
+  //  "schedule" = Not Before specified date
+  const [selectedOption, setSelectedOption] = useState("immediate");
   const [notBeforeDate, setNotBeforeDate] = useState(new Date());
-  // Add calendar
+  const [selectedStartTime, setSelectedStartTime] = useState("10:00");
+  const [selectedEndTime, setSelectedEndTime] = useState("10:00");
 
-  const [selectedOption, setSelectedOption] = useState("");
-
-  // Handle change event when a radio button is selected
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    const utcStartTime = moment(selectedStartTime, "HH:mm")
+      .utc()
+      .format("HH:mm");
+    const utcEndTime = moment(selectedEndTime, "HH:mm").utc().format("HH:mm");
+    onScheduleChange({
+      not_before:
+        selectedOption === "immediate"
+          ? null
+          : Math.floor(notBeforeDate.getTime() / 1000),
+      permitted_hours: {
+        start: utcStartTime,
+        end: utcEndTime,
+      },
+    });
   };
+
+  const onDateChange = (date) => {
+    setNotBeforeDate(date);
+    const utcStartTime = moment(selectedStartTime, "HH:mm")
+      .utc()
+      .format("HH:mm");
+    const utcEndTime = moment(selectedEndTime, "HH:mm").utc().format("HH:mm");
+    onScheduleChange({
+      not_before:
+        selectedOption === "immediate"
+          ? null
+          : Math.floor(date.getTime() / 1000),
+      permitted_hours: {
+        start: utcStartTime,
+        end: utcEndTime,
+      },
+    });
+  };
+
+  const onStartTimeChange = (time) => {
+    const utcStartTime = moment(time, "HH:mm").utc().format("HH:mm");
+    const utcEndTime = moment(selectedEndTime, "HH:mm").utc().format("HH:mm");
+
+    setSelectedStartTime(time);
+    onScheduleChange({
+      not_before:
+        selectedOption === "immediate"
+          ? null
+          : Math.floor(notBeforeDate.getTime() / 1000),
+      permitted_hours: {
+        start: utcStartTime,
+        end: utcEndTime,
+      },
+    });
+  };
+  const onEndTimeChange = (time) => {
+    const utcStartTime = moment(selectedStartTime, "HH:mm")
+      .utc()
+      .format("HH:mm");
+    const utcEndTime = moment(time, "HH:mm").utc().format("HH:mm");
+
+    setSelectedEndTime(time);
+    onScheduleChange({
+      not_before:
+        selectedOption === "immediate"
+          ? null
+          : Math.floor(notBeforeDate.getTime() / 1000),
+      permitted_hours: {
+        start: utcStartTime,
+        end: utcEndTime,
+      },
+    });
+  };
+
   return (
     <section>
       <div className="Square4">
@@ -29,8 +100,8 @@ function ScheduleSettings() {
             type="radio"
             className="radio-input"
             name="options"
-            value="option1"
-            checked={selectedOption === "option1"}
+            value="immediate"
+            checked={selectedOption === "immediate"}
             onChange={handleOptionChange}
           />{" "}
           As soon as DVB-SSU received
@@ -42,9 +113,9 @@ function ScheduleSettings() {
           <input
             type="radio"
             className="radio-input"
-            name="options"
-            value="option2"
-            checked={selectedOption === "option2"}
+            name="schedule"
+            value="scheduled"
+            checked={selectedOption === "scheduled"}
             onChange={handleOptionChange}
           />{" "}
           Not before{" "}
@@ -52,7 +123,7 @@ function ScheduleSettings() {
             <DatePicker
               wrapperClassName="datepicker"
               selected={notBeforeDate}
-              onChange={(date) => setNotBeforeDate(date)}
+              onChange={onDateChange}
             />
           </div>
         </label>
@@ -64,8 +135,8 @@ function ScheduleSettings() {
         <br></br>
         <div className="begHrs">
           <TimePicker
-            value={selectedTime}
-            onChange={(time) => setSelectedTime(time)}
+            value={selectedStartTime}
+            onChange={onStartTimeChange}
             disableClock
             customInput={<button>00:00 UTC</button>}
           />
@@ -74,8 +145,8 @@ function ScheduleSettings() {
         <br />
         <div className="endHrs">
           <TimePicker
-            value={selectedTime}
-            onChange={(time) => setSelectedTime(time)}
+            value={selectedEndTime}
+            onChange={onEndTimeChange}
             disableClock
             customInput={<button>00:00 UTC</button>}
           />

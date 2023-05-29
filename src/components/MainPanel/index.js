@@ -13,30 +13,25 @@ import {
   setProperty,
   deleteProperty,
 } from "../../services/policyHandler";
+import { getCities, getModels } from "../../services/dataUtils";
+
+const initConfig = () => ({
+  sw_version: "126",
+  coverage: 1,
+  models: getModels(),
+  cities: getCities(),
+  not_before: null,
+  permitted_hours: {
+    start: "02:00:00",
+    end: "08:00:00",
+  },
+});
 
 function MainPanel() {
-  const [config, setConfig] = useState({
-    sw_version: "126",
-    coverage: 1,
-    models: ["DCI", "MBOX", "PDS"],
-    cities: [
-      "Guadalajara",
-      "Mexico City",
-      "Salamanca",
-      "Torreon",
-      "Los Mochis",
-      "Cancun",
-    ],
-    not_before: null,
-    permitted_hours: {
-      start: "02:00:00",
-      end: "08:00:00",
-    },
-  });
+  const [config, setConfig] = useState(initConfig);
 
   const onPercentageChange = (evt) => {
     const { value } = evt.target;
-    console.log("mainPanel onPercentageChange value: " + value);
     setConfig((prevState) => ({
       ...prevState,
       coverage: value / 100,
@@ -44,8 +39,8 @@ function MainPanel() {
   };
 
   const onCityChange = (selectedCities) => {
-    
     console.log("mainPanel onCityChange selectedCities: ", selectedCities);
+
     setConfig((prevState) => ({
       ...prevState,
       cities: selectedCities,
@@ -53,17 +48,19 @@ function MainPanel() {
     console.log("City in property:", cities);
   };
   const onModelChange = (selectedModels) => {
-    console.log("mainPanel onModelChange selectedModels:", selectedModels);
     setConfig((prevState) => ({
       ...prevState,
       models: selectedModels,
     }));
     console.log("Models in property:", models);
   };
-
-  const onNotBeforeChange = () => {};
-
-  const onPermittedHoursChange = () => {};
+  const onScheduleChange = (schedule) => {
+    setConfig((prevState) => ({
+      ...prevState,
+      not_before: schedule.not_before,
+      permitted_hours: schedule.permitted_hours,
+    }));
+  };
 
   const onClick = () => {
     console.log("onClick");
@@ -75,7 +72,9 @@ function MainPanel() {
 
     try {
       // getAllProperties()
-      //  setProperty(properties);
+      properties.forEach((prop) => {
+        setProperty(prop);
+      });
       // deleteProperty(testProp)
       console.log("onClick done");
     } catch (error) {
@@ -86,8 +85,6 @@ function MainPanel() {
   const coverage = config.coverage;
   const cities = config.cities;
   const models = config.models;
-  const notBefore = config.not_Before;
-  const permittedHours = config.permitted_Hours;
 
   return (
     <section>
@@ -98,7 +95,7 @@ function MainPanel() {
         />
         <ModelSettings onModelChange={onModelChange} selectedModels={models} />
         <GeoSettings onCityChange={onCityChange} selectedCities={cities} />
-        <ScheduleSettings />
+        <ScheduleSettings onScheduleChange={onScheduleChange} />
         <UpgradeStatistics />
         <button type="button" className="BTN btn-danger" onClick={onClick}>
           Apply SSU Rollout Policy
@@ -108,5 +105,4 @@ function MainPanel() {
     </section>
   );
 }
-
 export default MainPanel;
