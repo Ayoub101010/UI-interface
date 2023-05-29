@@ -11,26 +11,22 @@ import {
   setProperty,
   deleteProperty,
 } from "../../services/policyHandler";
+import { getCities, getModels } from "../../services/dataUtils";
+
+const initConfig = () => ({
+  sw_version: "126",
+  coverage: 1,
+  models: getModels(),
+  cities: getCities(),
+  not_before: null,
+  permitted_hours: {
+    start: "02:00:00",
+    end: "08:00:00",
+  },
+});
 
 function MainPanel() {
-  const [config, setConfig] = useState({
-    sw_version: "126",
-    coverage: 1,
-    models: ["DCI", "MBOX", "PDS"],
-    cities: [
-      "Guadalajara",
-      "Mexico City",
-      "Salamanca",
-      "Torreon",
-      "Los Mochis",
-      "Cancun",
-    ],
-    not_before: null,
-    permitted_hours: {
-      start: "02:00:00",
-      end: "08:00:00",
-    },
-  });
+  const [config, setConfig] = useState(initConfig);
 
   const onPercentageChange = (evt) => {
     const { value } = evt.target;
@@ -72,7 +68,9 @@ function MainPanel() {
 
     try {
       // getAllProperties()
-      //  setProperty(properties);
+      properties.forEach((prop) => {
+        setProperty(prop);
+      });
       // deleteProperty(testProp)
       console.log("onClick done");
     } catch (error) {
@@ -83,8 +81,6 @@ function MainPanel() {
   const coverage = config.coverage;
   const cities = config.cities;
   const models = config.models;
-
-  // const permittedHours = config.permitted_Hours;
 
   return (
     <section>

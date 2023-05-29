@@ -22,7 +22,9 @@ function ScheduleSettings({ onScheduleChange }) {
     const utcEndTime = moment(selectedEndTime, "HH:mm").utc().format("HH:mm");
     onScheduleChange({
       not_before:
-        selectedOption === "immediate" ? null : notBeforeDate.toString(),
+        selectedOption === "immediate"
+          ? null
+          : Math.floor(notBeforeDate.getTime() / 1000),
       permitted_hours: {
         start: utcStartTime,
         end: utcEndTime,
@@ -37,7 +39,10 @@ function ScheduleSettings({ onScheduleChange }) {
       .format("HH:mm");
     const utcEndTime = moment(selectedEndTime, "HH:mm").utc().format("HH:mm");
     onScheduleChange({
-      not_before: selectedOption === "immediate" ? null : date.toString(),
+      not_before:
+        selectedOption === "immediate"
+          ? null
+          : Math.floor(date.getTime() / 1000),
       permitted_hours: {
         start: utcStartTime,
         end: utcEndTime,
@@ -52,7 +57,9 @@ function ScheduleSettings({ onScheduleChange }) {
     setSelectedStartTime(time);
     onScheduleChange({
       not_before:
-        selectedOption === "immediate" ? null : notBeforeDate.toString(),
+        selectedOption === "immediate"
+          ? null
+          : Math.floor(notBeforeDate.getTime() / 1000),
       permitted_hours: {
         start: utcStartTime,
         end: utcEndTime,
@@ -68,7 +75,9 @@ function ScheduleSettings({ onScheduleChange }) {
     setSelectedEndTime(time);
     onScheduleChange({
       not_before:
-        selectedOption === "immediate" ? null : notBeforeDate.toString(),
+        selectedOption === "immediate"
+          ? null
+          : Math.floor(notBeforeDate.getTime() / 1000),
       permitted_hours: {
         start: utcStartTime,
         end: utcEndTime,
