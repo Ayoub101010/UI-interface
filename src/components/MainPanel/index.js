@@ -25,7 +25,7 @@ function MainPanel() {
       "Los Mochis",
       "Cancun",
     ],
-    not_before: null,
+    not_before: " ",
     permitted_hours: {
       start: "02:00:00",
       end: "08:00:00",
@@ -34,7 +34,6 @@ function MainPanel() {
 
   const onPercentageChange = (evt) => {
     const { value } = evt.target;
-    console.log("mainPanel onPercentageChange value: " + value);
     setConfig((prevState) => ({
       ...prevState,
       coverage: value / 100,
@@ -42,8 +41,6 @@ function MainPanel() {
   };
 
   const onCityChange = (selectedCities) => {
-    // Fonction appelée lorsqu'une nouvelle ville est sélectionnée dans "ModelSettings"
-    console.log("mainPanel onCityChange selectedCities: ", selectedCities);
     setConfig((prevState) => ({
       ...prevState,
       cities: selectedCities,
@@ -51,17 +48,19 @@ function MainPanel() {
     console.log("City in property:", cities);
   };
   const onModelChange = (selectedModels) => {
-    console.log("mainPanel onModelChange selectedModels:", selectedModels);
     setConfig((prevState) => ({
       ...prevState,
       models: selectedModels,
     }));
     console.log("Models in property:", models);
   };
-
-  const onNotBeforeChange = () => {};
-
-  const onPermittedHoursChange = () => {};
+  const onScheduleChange = (schedule) => {
+    setConfig((prevState) => ({
+      ...prevState,
+      not_before: schedule.not_before,
+      permitted_hours: schedule.permitted_hours,
+    }));
+  };
 
   const onClick = () => {
     console.log("onClick");
@@ -84,8 +83,8 @@ function MainPanel() {
   const coverage = config.coverage;
   const cities = config.cities;
   const models = config.models;
-  const notBefore = config.not_Before;
-  const permittedHours = config.permitted_Hours;
+
+  // const permittedHours = config.permitted_Hours;
 
   return (
     <section>
@@ -96,7 +95,7 @@ function MainPanel() {
         />
         <ModelSettings onModelChange={onModelChange} selectedModels={models} />
         <GeoSettings onCityChange={onCityChange} selectedCities={cities} />
-        <ScheduleSettings />
+        <ScheduleSettings onScheduleChange={onScheduleChange} />
         <UpgradeStatistics />
         <button type="button" className="btn btn-danger" onClick={onClick}>
           Apply SSU Rollout Policy
@@ -106,5 +105,4 @@ function MainPanel() {
     </section>
   );
 }
-
 export default MainPanel;
