@@ -1,4 +1,5 @@
 import React from "react";
+import "./ModelSettings.css";
 
 function ModelSettings({ onModelChange, selectedModels }) {
   const handleModelChange = (event) => {

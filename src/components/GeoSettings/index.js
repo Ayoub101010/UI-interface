@@ -1,4 +1,6 @@
 import React from "react";
+import "./GeoSettings.css";
+
 
 function GeoSettings({ selectedCities, onCityChange }) {
   const cities = [

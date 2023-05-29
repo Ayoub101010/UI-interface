@@ -6,6 +6,8 @@ import ScheduleSettings from "../ScheduleSettings/index";
 import UpgradeStatistics from "../UpgradeStatistics/index";
 import { generateProps } from "../../services/policyutils";
 import PresetGroups from "../PresetGroups/index";
+import "../MainPanel/MainPanel.css";
+
 import {
   getAllProperties,
   setProperty,
@@ -42,7 +44,7 @@ function MainPanel() {
   };
 
   const onCityChange = (selectedCities) => {
-    // Fonction appelée lorsqu'une nouvelle ville est sélectionnée dans "ModelSettings"
+    
     console.log("mainPanel onCityChange selectedCities: ", selectedCities);
     setConfig((prevState) => ({
       ...prevState,
@@ -98,7 +100,7 @@ function MainPanel() {
         <GeoSettings onCityChange={onCityChange} selectedCities={cities} />
         <ScheduleSettings />
         <UpgradeStatistics />
-        <button type="button" className="btn btn-danger" onClick={onClick}>
+        <button type="button" className="BTN btn-danger" onClick={onClick}>
           Apply SSU Rollout Policy
         </button>
         <PresetGroups />

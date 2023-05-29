@@ -1,4 +1,5 @@
 import React from "react";
+import "./PercentageSettings.css";
 
 function PercentageSettings(props) {
   return (

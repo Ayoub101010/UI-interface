@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./UpgradeStatistics.css";
 function UpgradeStatistics() {
   return (
     <section>

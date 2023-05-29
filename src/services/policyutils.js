@@ -2,24 +2,10 @@ import { getCities, getModels } from "./dataUtils";
 
 const getOtaProps = (config) => {
   const props = [];
-  //Global refuse policy
-  props.push({
-    coverage: 1,
-    coverage_seed: 0,
-    enabled: true,
-    expires_by: null,
-    filter: {},
-    key: "OtaRefusedVersion",
-    not_after: null,
-    not_before: config.not_before,
-    ns: "sysdl",
-    tag: config.tag,
-    value: config.sw_version,
-  });
 
   //Specific accept policies
-  const allCitiesSelected = config.cities.length === getCities().length; // Toutes les villes sélectionnées
-  const allModelsSelected = config.models.length === getModels().length; // Tous les modèles sélectionnés
+  const allCitiesSelected = config.cities.length === getCities().length; 
+  const allModelsSelected = config.models.length === getModels().length;
   let prop = {
     comment: null,
     coverage: config.coverage,
@@ -30,7 +16,7 @@ const getOtaProps = (config) => {
     not_after: null,
     not_before: config.not_before,
     ns: "sysdl",
-    tag: config.tag,
+    tag: config.tag ,
     value: null,
   };
 
@@ -38,6 +24,7 @@ const getOtaProps = (config) => {
     for (const model of config.models) {
       if (allCitiesSelected && allModelsSelected) {
         props.push(prop);
+        return props;
       } else if (allCitiesSelected) {
         props.push({
           ...prop,
@@ -69,6 +56,20 @@ const getOtaProps = (config) => {
       }
     }
   }
+    //Global refuse policy
+    props.push({
+      coverage: 1,
+      coverage_seed: 0,
+      enabled: true,
+      expires_by: null,
+      filter: {},
+      key: "OtaRefusedVersion",
+      not_after: null,
+      not_before: config.not_before,
+      ns: "sysdl",
+      tag: config.tag,
+      value: config.sw_version,
+    });
   return props;
 };
 
