@@ -3,11 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
-<<<<<<< HEAD
 import "./ScheduleSettings.css";
-=======
 import moment from "moment";
->>>>>>> 00e86b4 (Include ScheduleSettings in the MainPanel)
 
 function ScheduleSettings({ onScheduleChange }) {
   // values :

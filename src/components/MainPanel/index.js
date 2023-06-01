@@ -14,6 +14,8 @@ import {
   deleteProperty,
 } from "../../services/policyHandler";
 import { getCities, getModels } from "../../services/dataUtils";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const initConfig = () => ({
   sw_version: "126",
@@ -29,7 +31,7 @@ const initConfig = () => ({
 
 function MainPanel() {
   const [config, setConfig] = useState(initConfig);
-
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
   const onPercentageChange = (evt) => {
     const { value } = evt.target;
     setConfig((prevState) => ({
@@ -62,32 +64,67 @@ function MainPanel() {
     }));
   };
 
-  const onClick = () => {
-    console.log("onClick");
-    console.log(config);
-    config.tag = Date.now(); // Unix timestamp in milliseconds
-    const properties = [];
-    properties.push(...generateProps(config));
-    console.log(properties);
+  const validateConfig = () => {
+    console.log("Need to add rules validation here...");
+  };
 
-    try {
-      // getAllProperties()
-      properties.forEach((prop) => {
-        setProperty(prop);
-      });
-      // deleteProperty(testProp)
-      console.log("onClick done");
-    } catch (error) {
-      console.log("call failed");
-    }
+  const onValidate = () => {
+    console.log("onValidate");
+    console.log(config);
+
+    validateConfig();
+    showConfirmModal();
   };
 
   const coverage = config.coverage;
   const cities = config.cities;
   const models = config.models;
+  const closeConfirmModal = (evt) => {
+    if (evt && evt.target.name === "ok") {
+      config.tag = Date.now(); // Unix timestamp in milliseconds
+      const properties = [];
+      properties.push(...generateProps(config));
+      console.log(properties);
+      try {
+        // getAllProperties()
+        properties.forEach((prop) => {
+          setProperty(prop);
+        });
+        // deleteProperty(testProp)
+        console.log("onClick done");
+      } catch (error) {
+        console.log("call failed");
+      }
+    }
+    setConfirmModalShown(false);
+  };
+  const showConfirmModal = () => setConfirmModalShown(true);
 
   return (
     <section>
+      <Modal
+        className="model"
+        show={confirmModalShown}
+        onHide={closeConfirmModal}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title></Modal.Title>
+        </Modal.Header>
+        <Modal.Body> Please Confirm Policy Creation </Modal.Body>
+        <Modal.Footer>
+          <Button name="cancel" variant="secondary" onClick={closeConfirmModal}>
+            Close
+          </Button>
+          <Button
+            name="ok"
+            variant="primary"
+            className="confirmbutton"
+            onClick={closeConfirmModal}
+          >
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <div className="square-container">
         <PercentageSettings
           coverage={coverage * 100}
@@ -97,7 +134,11 @@ function MainPanel() {
         <GeoSettings onCityChange={onCityChange} selectedCities={cities} />
         <ScheduleSettings onScheduleChange={onScheduleChange} />
         <UpgradeStatistics />
-        <button type="button" className="BTN btn-danger" onClick={onClick}>
+        <button
+          type="button"
+          className="validate-btn btn btn-danger"
+          onClick={onValidate}
+        >
           Apply SSU Rollout Policy
         </button>
         <PresetGroups />
