@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useState ,useEffect} from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import "./ReviewUpdates.css";
+import {getAllProperties} from "../../services/policyHandler";
 
-function ReviewUpdates() {
+function ReviewUpdates({ properties, onDelete }) {
+  const [hoverIndex, setHoverIndex] = useState(-1);
+
+  const handleHover = (index) => {
+    setHoverIndex(index);
+  };
+
+  const handleDelete = (index) => {
+    onDelete(index);
+  };
+  useEffect(async () => {
+    try {
+      console.log("Calling getAllProporties");
+      // Appeler votre fonction generateProps pour obtenir les propriétés du backend
+      const fetchedProperties = await getAllProperties();
+      
+      const configs = generateConfigs(fetchedProperties)
+      console.log(fetchedProperties);
+    } catch (error) {
+      console.error("Une erreur", error);
+    }
+  // Appeler la fonction pour récupérer les propriétés du backend au chargement du composant
+});
+  
+
   return (
     <div>
       <h2 className="RSU">Review Scheduled Updates</h2>
@@ -23,57 +48,45 @@ function ReviewUpdates() {
           </tr>
         </thead>
         <tbody className="Tbody">
-          <tr>
-            <td>2023-05-28</td>
-            <td>Release 1.3.6</td>
-            <td>80%</td>
-            <td>MBOXH4</td>
-            <td>
-              Salamanca <a href="#"> (view)</a>
-            </td>
-            <td>
-              <Button className="btnA" variant="primary">
-                Edit
-              </Button>
-              <Button className="btnB" variant="danger">
-                Delete
-              </Button>
-            </td>
-          </tr>
-          <tr>
-            <td>2023-05-29</td>
-            <td>Release 1.3.6</td>
-            <td>90%</td>
-            <td>PDS2140</td>
-            <td>
-              Mexico <a href="#"> (view)</a>
-            </td>
-            <td>
-              <Button className="btnA" variant="primary">
-                Edit
-              </Button>
-              <Button className="btnB" variant="danger">
-                Delete
-              </Button>
-            </td>
-          </tr>
-          <tr>
-            <td>2023-05-30</td>
-            <td>Release 1.3.6</td>
-            <td>75%</td>
-            <td>747MEG</td>
-            <td>
-              Mexico <a href="#"> (view)</a>
-            </td>
-            <td>
-              <Button className="btnA" variant="primary">
-                Edit
-              </Button>
-              <Button className="btnB" variant="danger">
-                Delete
-              </Button>
-            </td>
-          </tr>
+
+          {properties.map((property, index) => (
+            <tr
+              key={index}
+              onMouseEnter={() => handleHover(index)}
+              onMouseLeave={() => handleHover(-1)}
+            >
+              <td>{property.date}</td>
+              <td>{property.version}</td>
+              <td>{property.devices}</td>
+              <td>{property.models}</td>
+              <td>
+                {property.cities.length > 0 && (
+                  <div className="hover-container">
+                    <span>{property.totalCities}</span>&nbsp;
+                    <a href="#" className="hover-link">
+                      (Click to view)
+                    </a>
+                    {hoverIndex === index && (
+                      <div className="hover-box">{property.cities}</div>
+                    )}
+                  </div>
+                )}
+              </td>
+              <td>
+                <Button className="btnA" variant="primary">
+                  Edit
+                </Button>
+                <Button
+                  className="btnB"
+                  variant="danger"
+                  onClick={() => handleDelete(index)}
+                >
+                  Delete
+                </Button>
+              </td>
+            </tr>
+          ))}
+
         </tbody>
       </Table>
     </div>

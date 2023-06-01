@@ -13,7 +13,7 @@ function Header() {
       />
       <select className="Group">
         <option value="" disabled selected>
-          Use an existing Present Group
+          Use an existing Preset Group
         </option>
       </select>
     </section>

@@ -36,5 +36,35 @@
   border-color: rgb(57, 137, 33);
 }
 thead tr th:last-child {
+
   width: 240px;
 }
+
+  .hover-link {
+    position: relative;
+  }
+  
+  .hover-link:hover + .hover-box {
+    display: block;
+  }
+  
+  .hover-box {
+    position: absolute;
+    display: none;
+    width: 120px;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    z-index: 1;
+  }
+  
+  .hover-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .hover-container:hover .hover-box {
+    display: block;
+  }
+  
+

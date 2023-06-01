@@ -4,13 +4,27 @@ import Body from "../Body/body";
 import ReviewUpdates from "../ReviewUpdates";
 import "./NavBar.css";
 
-function NavBar() {
+function NavBar({ onDelete }) {
   const [activeItem, setActiveItem] = useState(null);
+  const [properties, setProperties] = useState([]);
 
   const handleNavItemClick = (event) => {
     const clickedItem = event.target.getAttribute("href");
     setActiveItem(clickedItem);
   };
+
+  const handlePropertyAdd = (newProperty) => {
+    setProperties((prevProperties) => [...prevProperties, newProperty]);
+  };
+  const handleDelete = (index) => {
+    setProperties((prevProperties) => {
+      const updatedProperties = [...prevProperties];
+      updatedProperties.splice(index, 1);
+      return updatedProperties;
+    });
+  };
+  
+  
 
   return (
     <>
@@ -54,11 +68,13 @@ function NavBar() {
       {activeItem === "#PSR" && (
         <>
           <Body />
-          <MainPanel />
+          <MainPanel onPropertyAdd={handlePropertyAdd} />
         </>
       )}
 
-      {activeItem === "#RSU" && <ReviewUpdates />}
+      {activeItem === "#RSU" && (
+        <ReviewUpdates properties={properties} onDelete={handleDelete} />
+      )}
 
       {activeItem !== "#PSR" && activeItem !== "#RSU" && (
         <div>

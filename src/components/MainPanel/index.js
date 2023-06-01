@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import PercentageSettings from "../PercentageSettings/index";
 import ModelSettings from "../ModelSettings/index";
 import GeoSettings from "../GeoSettings/index";
@@ -29,9 +29,10 @@ const initConfig = () => ({
   },
 });
 
-function MainPanel() {
+function MainPanel({onPropertyAdd}) {
   const [config, setConfig] = useState(initConfig);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
+
   const onPercentageChange = (evt) => {
     const { value } = evt.target;
     setConfig((prevState) => ({
@@ -74,6 +75,24 @@ function MainPanel() {
 
     validateConfig();
     showConfirmModal();
+    try {
+
+      const newProperty = {
+        date: new Date().toISOString().split('T')[0],
+        version: `Release ${config.sw_version}`,
+        devices: `${config.coverage * 100}%`,
+        models: config.models.join(' / '),
+        cities:config.cities.join(', '),
+        totalCities: config.cities.length
+      };
+  
+      // Appeler la fonction de rappel avec la nouvelle propriété
+      onPropertyAdd(newProperty);
+      console.log("onClick done");
+    } catch (error) {
+      console.log("call failed");
+    }
+
   };
 
   const coverage = config.coverage;

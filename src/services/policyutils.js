@@ -23,7 +23,7 @@ const getOtaProps = (config) => {
   for (const city of config.cities) {
     for (const model of config.models) {
       if (allCitiesSelected && allModelsSelected) {
-        props.push(prop);
+        // props.push(prop);
         return props;
       } else if (allCitiesSelected) {
         props.push({
@@ -108,4 +108,5 @@ const getPermittedTimeProps = (config) => {
 
 export const generateProps = (config) => {
   return [...getOtaProps(config), ...getPermittedTimeProps(config)];
+ 
 };
