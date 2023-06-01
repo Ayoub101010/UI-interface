@@ -6,7 +6,8 @@ import "./ReviewUpdates.css";
 function ReviewUpdates() {
   return (
     <div>
-    <h2 className="RSU">Review Scheduled Updates</h2><br></br>
+      <h2 className="RSU">Review Scheduled Updates</h2>
+      <br></br>
       <Table striped bordered hover className="Tbl">
         <thead className="Thead">
           <tr>
@@ -26,33 +27,51 @@ function ReviewUpdates() {
             <td>2023-05-28</td>
             <td>Release 1.3.6</td>
             <td>80%</td>
-            <td>DCI</td>
-            <td>Salamanca</td>
+            <td>MBOXH4</td>
             <td>
-              <Button className="btnA" variant="primary">Edit</Button>
-              <Button className="btnB"variant="danger">Delete</Button>
+              Salamanca <a href="#"> (view)</a>
+            </td>
+            <td>
+              <Button className="btnA" variant="primary">
+                Edit
+              </Button>
+              <Button className="btnB" variant="danger">
+                Delete
+              </Button>
             </td>
           </tr>
           <tr>
             <td>2023-05-29</td>
             <td>Release 1.3.6</td>
             <td>90%</td>
-            <td>PDS</td>
-            <td>Mexico</td>
+            <td>PDS2140</td>
             <td>
-              <Button className="btnA" variant="primary">Edit</Button>
-              <Button className="btnB" variant="danger">Delete</Button>
+              Mexico <a href="#"> (view)</a>
+            </td>
+            <td>
+              <Button className="btnA" variant="primary">
+                Edit
+              </Button>
+              <Button className="btnB" variant="danger">
+                Delete
+              </Button>
             </td>
           </tr>
           <tr>
             <td>2023-05-30</td>
             <td>Release 1.3.6</td>
             <td>75%</td>
-            <td>MBOX</td>
-            <td>Mexico</td>
+            <td>747MEG</td>
             <td>
-              <Button className="btnA"variant="primary">Edit</Button>
-              <Button className="btnB" variant="danger">Delete</Button>
+              Mexico <a href="#"> (view)</a>
+            </td>
+            <td>
+              <Button className="btnA" variant="primary">
+                Edit
+              </Button>
+              <Button className="btnB" variant="danger">
+                Delete
+              </Button>
             </td>
           </tr>
         </tbody>

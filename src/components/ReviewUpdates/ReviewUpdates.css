@@ -1,45 +1,40 @@
-.Thead{
-    background-color: rgba(65, 154, 65, 0.918);
-    color: white;
-    font-family: "Bahnschrift SemiBold";
-   
+.Thead {
+  background-color: rgba(65, 154, 65, 0.918);
+  color: white;
+  font-family: "Bahnschrift SemiBold";
 }
-.btnB{
-    height: 30px;
-    margin-left: 25px;
-    color: white;
-    font-family: "Bahnschrift SemiBold";
-   
+.btnB {
+  height: 30px;
+  margin-left: 25px;
+  color: white;
+  font-family: "Bahnschrift SemiBold";
 }
-.btnA{
-    
-    height: 30px;
-    margin-left: 20px;
-    background-color: rgb(47, 148, 69);
-    color: white;
-    font-family: "Bahnschrift SemiBold";
-   border-color: rgb(47, 148, 69);; 
+.btnA {
+  height: 30px;
+  margin-left: 20px;
+  background-color: rgb(47, 148, 69);
+  color: white;
+  font-family: "Bahnschrift SemiBold";
+  border-color: rgb(47, 148, 69);
 }
 
-.Tbody{
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    font-family: "Bahnschrift SemiBold";
-
+.Tbody {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  font-family: "Bahnschrift";
 }
-.Tbl{
-    width: 1200px;
-    margin-left: 100px;
+.Tbl {
+  width: 1200px;
+  margin-left: 100px;
 }
-.RSU{
-    margin-left: 100px;
-    margin-top: 30px;
-} 
+.RSU {
+  margin-left: 100px;
+  margin-top: 30px;
+}
 .btnA:hover {
-    background-color: rgb(57, 137, 33);
-    border-color: rgb(57, 137, 33);
+  background-color: rgb(57, 137, 33);
+  border-color: rgb(57, 137, 33);
 }
 thead tr th:last-child {
-    width: 240px;
-  }
- 
+  width: 240px;
+}

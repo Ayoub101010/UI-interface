@@ -124,31 +124,35 @@ function ScheduleSettings({ onScheduleChange }) {
             />
           </div>
         </label>
-        <p>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Permitted
-          <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upgrade Hours
-        </p>
-        <br></br>
-        <br></br>
-        <div className="begHrs">
-          <TimePicker
-            value={selectedStartTime}
-            onChange={onStartTimeChange}
-            disableClock
-            customInput={<button>00:00 UTC</button>}
-          />
-        </div>
-        {} <br />
-        <br />
-        <div className="endHrs">
-          <TimePicker
-            value={selectedEndTime}
-            onChange={onEndTimeChange}
-            disableClock
-            customInput={<button>00:00 UTC</button>}
-          />
-        </div>
       </div>
+      <section>
+        <div className="Square5">
+          <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Permitted
+            <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upgrade Hours
+          </p>
+          <br></br>
+          <br></br>
+          <div className="begHrs">
+            <TimePicker
+              value={selectedStartTime}
+              onChange={onStartTimeChange}
+              disableClock
+              customInput={<button>00:00 UTC</button>}
+            />
+          </div>
+          {} <br />
+          <br />
+          <div className="endHrs">
+            <TimePicker
+              value={selectedEndTime}
+              onChange={onEndTimeChange}
+              disableClock
+              customInput={<button>00:00 UTC</button>}
+            />
+          </div>
+        </div>
+      </section>
     </section>
   );
 }
