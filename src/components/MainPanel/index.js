@@ -63,18 +63,11 @@ function MainPanel() {
       permitted_hours: schedule.permitted_hours,
     }));
   };
-  const [error, setError] = useState(null);
   const validateConfig = () => {
-    onPercentageChange();
-    onCityChange();
-    onModelChange();
-
     if (coverage > 100 || cities === null || models === null)
       console.log("there's an Error");
     console.log("Need to add rules validation here...");
   };
-  const validationError = validateConfig();
-  setError(validationError);
   const onValidate = () => {
     console.log("onValidate");
     console.log(config);
@@ -117,7 +110,7 @@ function MainPanel() {
         <Modal.Header closeButton>
           <Modal.Title></Modal.Title>
         </Modal.Header>
-        <Modal.Body> {error && <div>{error} </div>} </Modal.Body>
+        <Modal.Body> </Modal.Body>
         <Modal.Footer>
           <Button name="cancel" variant="secondary" onClick={closeConfirmModal}>
             Close
