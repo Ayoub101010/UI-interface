@@ -2,32 +2,22 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import "./ReviewUpdates.css";
-import { getAllProperties } from "../../services/policyHandler";
+import { deleteProperty, getAllProperties } from "../../services/policyHandler";
 import { getConfigsFromProperties } from "../../services/policyUtils";
 import { useNavigate } from "react-router-dom";
 
 function ReviewUpdates({ onDelete }) {
   const [hoverIndex, setHoverIndex] = useState(-1);
-  // const [configs, setConfigs] = useState([({
-  //   sw_version: "126",
-  //   coverage: 1,
-  //   models: ["PDS","MBOX"],
-  //   cities: ["Salamanca"],
-  //   not_before: null,
-  //   permitted_hours: {
-  //     start: "00:00:00",
-  //     end: "00:00:00",
-  //   },
-  // })]);
+  const [configs, setConfigs] = useState([]);
+  const [props, setProps] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const prepareConfigs = async () => {
-      console.log("jdnhdjn");
       try {
-        const props = await getAllProperties({ ns: "sysdl" });
-
-        const cfgs = getConfigsFromProperties(props);
+        const properties = await getAllProperties({ ns: "sysdl" });
+        setProps(properties)
+        const cfgs = getConfigsFromProperties(properties);
         console.log(cfgs);
         setConfigs(cfgs);
       } catch (error) {
@@ -41,8 +31,15 @@ function ReviewUpdates({ onDelete }) {
     setHoverIndex(index);
   };
 
-  const handleDelete = (index) => {
-    onDelete(index);
+  const handleDelete = (config) => {
+   props.forEach(prop => {
+    if (prop.tag === config.tag){
+      console.log("deleting prop");
+      deleteProperty(prop);
+    }
+    
+   });
+
   };
   const handleClick = (config) => {
     navigate("/ux", { state: config });
@@ -101,7 +98,7 @@ function ReviewUpdates({ onDelete }) {
                 <Button
                   className="btnB"
                   variant="danger"
-                  onClick={() => handleDelete(index)}
+                  onClick={() => handleDelete(config)}
                 >
                   Delete
                 </Button>

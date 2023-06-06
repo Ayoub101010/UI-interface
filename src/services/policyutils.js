@@ -19,7 +19,7 @@ export const getConfigsFromProperties = (props) => {
     // for each group of properties of the same tag, go through all properties
     // and collect config information
     // console.log(key, ': ',groupedData[key])
-    const config = { permitted_hours: {} };
+    const config = { tag: key, permitted_hours: {} };
     const cities = new Set();
     const models = new Set();
     groupedData[key].forEach((element) => {
@@ -31,7 +31,7 @@ export const getConfigsFromProperties = (props) => {
         if (!config.coverage && element.coverage) {
           config.coverage = element.coverage;
         }
-        if (!config.OtaRefusedVersion && element.key === "OtaRefusedVersion") {
+        if (!config.sw_version && element.key === "OtaRefusedVersion") {
           config.sw_version = element.value;
         }
         if (
@@ -71,12 +71,11 @@ export const getConfigsFromProperties = (props) => {
   return configs;
 };
 
-
 const getOtaProps = (config) => {
   const props = [];
 
   //Specific accept policies
-  const allCitiesSelected = config.cities.length === getCities().length; 
+  const allCitiesSelected = config.cities.length === getCities().length;
   const allModelsSelected = config.models.length === getModels().length;
   let prop = {
     comment: null,
@@ -88,7 +87,7 @@ const getOtaProps = (config) => {
     not_after: null,
     not_before: config.not_before,
     ns: "sysdl",
-    tag: config.tag ,
+    tag: config.tag,
     value: null,
   };
 
@@ -128,20 +127,20 @@ const getOtaProps = (config) => {
       }
     }
   }
-    //Global refuse policy
-    props.push({
-      coverage: 1,
-      coverage_seed: 0,
-      enabled: true,
-      expires_by: null,
-      filter: {},
-      key: "OtaRefusedVersion",
-      not_after: null,
-      not_before: config.not_before,
-      ns: "sysdl",
-      tag: config.tag,
-      value: config.sw_version,
-    });
+  //Global refuse policy
+  props.push({
+    coverage: 1,
+    coverage_seed: 0,
+    enabled: true,
+    expires_by: null,
+    filter: {},
+    key: "OtaRefusedVersion",
+    not_after: null,
+    not_before: config.not_before,
+    ns: "sysdl",
+    tag: config.tag,
+    value: config.sw_version,
+  });
   return props;
 };
 
@@ -180,5 +179,4 @@ const getPermittedTimeProps = (config) => {
 
 export const generateProps = (config) => {
   return [...getOtaProps(config), ...getPermittedTimeProps(config)];
- 
 };
