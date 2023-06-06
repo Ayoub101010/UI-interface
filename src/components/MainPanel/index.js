@@ -1,37 +1,43 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import PercentageSettings from "../PercentageSettings/index";
 import ModelSettings from "../ModelSettings/index";
 import GeoSettings from "../GeoSettings/index";
 import ScheduleSettings from "../ScheduleSettings/index";
 import UpgradeStatistics from "../UpgradeStatistics/index";
-import { generateProps } from "../../services/policyutils";
+import { generateProps } from "../../services/policyUtils";
 import PresetGroups from "../PresetGroups/index";
 import "../MainPanel/MainPanel.css";
-
+import Modal from "../Modal/index";
+import ModalComponent from "../Modal/index";
 import {
   getAllProperties,
   setProperty,
   deleteProperty,
 } from "../../services/policyHandler";
-import { getCities, getModels } from "../../services/dataUtils";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+
+import {
+  getCities,
+  getModels,
+  getSoftwareVersion,
+} from "../../services/dataUtils";
 
 const initConfig = () => ({
-  sw_version: "126",
+  sw_version: getSoftwareVersion(),
   coverage: 1,
   models: getModels(),
   cities: getCities(),
   not_before: null,
   permitted_hours: {
-    start: "02:00:00",
-    end: "08:00:00",
+    start: "00:00:00",
+    end: "00:00:00",
   },
 });
 
-function MainPanel({onPropertyAdd}) {
+function MainPanel() {
   const [config, setConfig] = useState(initConfig);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
+  const [errorModalShown, setErrorModalShown] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
 
   const onPercentageChange = (evt) => {
     const { value } = evt.target;
@@ -42,21 +48,19 @@ function MainPanel({onPropertyAdd}) {
   };
 
   const onCityChange = (selectedCities) => {
-    console.log("mainPanel onCityChange selectedCities: ", selectedCities);
-
     setConfig((prevState) => ({
       ...prevState,
       cities: selectedCities,
     }));
-    console.log("City in property:", cities);
   };
+
   const onModelChange = (selectedModels) => {
     setConfig((prevState) => ({
       ...prevState,
       models: selectedModels,
     }));
-    console.log("Models in property:", models);
   };
+
   const onScheduleChange = (schedule) => {
     setConfig((prevState) => ({
       ...prevState,
@@ -65,98 +69,88 @@ function MainPanel({onPropertyAdd}) {
     }));
   };
   const validateConfig = () => {
-    if (coverage > 100 || cities === null || models === null)
-      console.log("there's an Error");
-    console.log("Need to add rules validation here...");
-  };
-  const onValidate = () => {
-    console.log("onValidate");
-    console.log(config);
+    const errors = [];
 
-    validateConfig();
-    showConfirmModal();
-    try {
-
-      const newProperty = {
-        date: new Date().toISOString().split('T')[0],
-        version: `Release ${config.sw_version}`,
-        devices: `${config.coverage * 100}%`,
-        models: config.models.join(' / '),
-        cities:config.cities.join(', '),
-        totalCities: config.cities.length
-      };
-  
-      // Appeler la fonction de rappel avec la nouvelle propriété
-      onPropertyAdd(newProperty);
-      console.log("onClick done");
-    } catch (error) {
-      console.log("call failed");
+    // Validate coverage percentage
+    if (
+      isNaN(config.coverage) ||
+      config.coverage < 0 ||
+      config.coverage > 100
+    ) {
+      errors.push(
+        "- Invalid coverage percentage. Please enter a value between 0 and 100."
+      );
     }
 
+    // Validate selected cities
+    if (config.cities.length === 0) {
+      errors.push("- Please select at least one city.");
+    }
+
+    // Validate selected models
+    if (config.models.length === 0) {
+      errors.push("- Please select at least one model.");
+    }
+
+    setErrorMessages(errors);
+    return errors.length === 0;
   };
 
-  const coverage = config.coverage;
+  const onConfirm = () => {
+    if (validateConfig()) {
+      showConfirmModal();
+    } else {
+      setErrorModalShown(true);
+    }
+  };
+
+  const coverage = config.coverage * 100;
   const cities = config.cities;
   const models = config.models;
+
   const closeConfirmModal = (evt) => {
     if (evt && evt.target.name === "ok") {
       config.tag = Date.now(); // Unix timestamp in milliseconds
-      const properties = [];
-      properties.push(...generateProps(config));
+      const properties = generateProps(config);
       console.log(properties);
       try {
-        // getAllProperties()
         properties.forEach((prop) => {
           setProperty(prop);
         });
-        // deleteProperty(testProp)
         console.log("onClick done");
       } catch (error) {
         console.log("call failed");
+        setErrorModalShown(true);
       }
     }
     setConfirmModalShown(false);
   };
+
   const showConfirmModal = () => setConfirmModalShown(true);
 
   return (
     <section>
       <Modal
-        className="model"
         show={confirmModalShown}
         onHide={closeConfirmModal}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
-        </Modal.Header>
-        <Modal.Body> </Modal.Body>
-        <Modal.Footer>
-          <Button name="cancel" variant="secondary" onClick={closeConfirmModal}>
-            Close
-          </Button>
-          <Button
-            name="ok"
-            variant="primary"
-            className="confirmbutton"
-            onClick={closeConfirmModal}
-          >
-            Confirm
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        onConfirm={closeConfirmModal}
+      />
+      <ModalComponent
+        show={errorModalShown}
+        onHide={() => setErrorModalShown(false)}
+        errorMessages={errorMessages}
+      />
       <div className="square-container">
-        <PercentageSettings
-          coverage={coverage * 100}
-          onChange={onPercentageChange}
-        />
+        <PercentageSettings coverage={coverage} onChange={onPercentageChange} />
         <ModelSettings onModelChange={onModelChange} selectedModels={models} />
         <GeoSettings onCityChange={onCityChange} selectedCities={cities} />
         <ScheduleSettings onScheduleChange={onScheduleChange} />
         <UpgradeStatistics />
+
         <button
           type="button"
           className="validate-btn btn btn-danger"
-          onClick={onValidate}
+          onClick={onConfirm}
         >
           Apply SSU Rollout Policy
         </button>
@@ -165,4 +159,5 @@ function MainPanel({onPropertyAdd}) {
     </section>
   );
 }
+
 export default MainPanel;

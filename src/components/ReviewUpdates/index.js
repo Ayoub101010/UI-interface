@@ -1,11 +1,28 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import "./ReviewUpdates.css";
-import {getAllProperties} from "../../services/policyHandler";
-
-function ReviewUpdates({ properties, onDelete }) {
+import { getAllProperties } from "../../services/policyHandler";
+import { getConfigsFromProperties } from "../../services/policyUtils";
+function ReviewUpdates({ onDelete }) {
   const [hoverIndex, setHoverIndex] = useState(-1);
+  const [configs, setConfigs] = useState([]);
+
+  useEffect(() => {
+    const prepareConfigs = async () => {
+      console.log("jdnhdjn");
+      try {
+        const props = await getAllProperties({ ns: "sysdl" });
+
+        const cfgs = getConfigsFromProperties(props);
+        console.log(cfgs);
+        setConfigs(cfgs);
+      } catch (error) {
+        console.log("failed to retried props");
+      }
+    };
+    prepareConfigs();
+  }, []);
 
   const handleHover = (index) => {
     setHoverIndex(index);
@@ -14,20 +31,6 @@ function ReviewUpdates({ properties, onDelete }) {
   const handleDelete = (index) => {
     onDelete(index);
   };
-  useEffect(async () => {
-    try {
-      console.log("Calling getAllProporties");
-      // Appeler votre fonction generateProps pour obtenir les propriétés du backend
-      const fetchedProperties = await getAllProperties();
-      
-      const configs = generateConfigs(fetchedProperties)
-      console.log(fetchedProperties);
-    } catch (error) {
-      console.error("Une erreur", error);
-    }
-  // Appeler la fonction pour récupérer les propriétés du backend au chargement du composant
-});
-  
 
   return (
     <div>
@@ -49,25 +52,26 @@ function ReviewUpdates({ properties, onDelete }) {
         </thead>
         <tbody className="Tbody">
 
-          {properties.map((property, index) => (
+          {configs.map((config, index) => (
+
             <tr
               key={index}
               onMouseEnter={() => handleHover(index)}
               onMouseLeave={() => handleHover(-1)}
             >
-              <td>{property.date}</td>
-              <td>{property.version}</td>
-              <td>{property.devices}</td>
-              <td>{property.models}</td>
+              <td>{new Date(config.not_before * 1000).toLocaleString()}</td>
+              <td>{config.sw_version}</td>
+              <td>{config.coverage}</td>
+              <td>{config.models}</td>
               <td>
-                {property.cities.length > 0 && (
+                {config.cities.length > 0 && (
                   <div className="hover-container">
-                    <span>{property.totalCities}</span>&nbsp;
+                    <span>{config.cities.length}</span>&nbsp;
                     <a href="#" className="hover-link">
                       (Click to view)
                     </a>
                     {hoverIndex === index && (
-                      <div className="hover-box">{property.cities}</div>
+                      <div className="hover-box">{config.cities}</div>
                     )}
                   </div>
                 )}
