@@ -32,14 +32,14 @@ function ReviewUpdates({ onDelete }) {
   };
 
   const handleDelete = (config) => {
-   props.forEach(prop => {
-    if (prop.tag === config.tag){
-      console.log("deleting prop");
-      deleteProperty(prop);
-    }
-    
-   });
-
+    props.forEach((prop) => {
+      if (prop.tag === config.tag){
+        console.log("deleting prop");
+        deleteProperty(prop);
+      }
+    });
+    setConfigs(configs.filter((c) => c.tag !== config.tag))
+    setProps(props.filter((p) => p.tag !== config.tag))
   };
   const handleClick = (config) => {
     navigate("/ux", { state: config });

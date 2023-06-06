@@ -28,7 +28,7 @@ const initConfig = () => ({
   coverage: 1,
   models: getModels(),
   cities: getCities(),
-  not_before: null,
+  not_before: Math.floor(Date.now() / 1000),
   permitted_hours: {
     start: "00:00:00",
     end: "00:00:00",
@@ -42,19 +42,20 @@ function MainPanel() {
   const [errorMessages, setErrorMessages] = useState([]);
   const location = useLocation();
 
-  const onPercentageChange = (evt) => {
-    const { value } = evt.target;
-    setConfig((prevState) => ({
-      ...prevState,
-      coverage: value / 100,
-    }));
-  };
 useEffect( () => {
   const data = location.state;
   if (data) {
     setConfig(data);
   }
 }, []) 
+
+const onPercentageChange = (evt) => {
+  const { value } = evt.target;
+  setConfig((prevState) => ({
+    ...prevState,
+    coverage: value / 100,
+  }));
+};
   const onCityChange = (selectedCities) => {
     setConfig((prevState) => ({
       ...prevState,
@@ -70,6 +71,7 @@ useEffect( () => {
   };
 
   const onScheduleChange = (schedule) => {
+    console.log('onScheduleChange', schedule);
     setConfig((prevState) => ({
       ...prevState,
       not_before: schedule.not_before,
@@ -78,7 +80,6 @@ useEffect( () => {
   };
   const validateConfig = () => {
     const errors = [];
-
     // Validate coverage percentage
     if (
       isNaN(config.coverage) ||
@@ -120,6 +121,7 @@ useEffect( () => {
     if (evt && evt.target.name === "ok") {
       config.tag = config.tag ? config.tag : Date.now(); // Unix timestamp in milliseconds
       const properties = generateProps(config);
+      console.log(config);
       console.log(properties);
       try {
         properties.forEach((prop) => {
@@ -139,6 +141,7 @@ useEffect( () => {
   return (
     <section>
       <Modal
+        centered
         show={confirmModalShown}
         onHide={closeConfirmModal}
         onConfirm={closeConfirmModal}

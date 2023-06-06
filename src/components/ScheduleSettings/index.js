@@ -24,7 +24,7 @@ function ScheduleSettings({ onScheduleChange }) {
     onScheduleChange({
       not_before:
         selectedOption === "immediate"
-          ? null
+          ? Math.floor(Date.now() / 1000)
           : Math.floor(notBeforeDate.getTime() / 1000),
       permitted_hours: {
         start: utcStartTime,
@@ -42,7 +42,7 @@ function ScheduleSettings({ onScheduleChange }) {
     onScheduleChange({
       not_before:
         selectedOption === "immediate"
-          ? null
+          ? Math.floor(Date.now() / 1000)
           : Math.floor(date.getTime() / 1000),
       permitted_hours: {
         start: utcStartTime,
@@ -59,7 +59,7 @@ function ScheduleSettings({ onScheduleChange }) {
     onScheduleChange({
       not_before:
         selectedOption === "immediate"
-          ? null
+          ? Math.floor(Date.now() / 1000)
           : Math.floor(notBeforeDate.getTime() / 1000),
       permitted_hours: {
         start: utcStartTime,
@@ -77,7 +77,7 @@ function ScheduleSettings({ onScheduleChange }) {
     onScheduleChange({
       not_before:
         selectedOption === "immediate"
-          ? null
+          ? Math.floor(Date.now() / 1000)
           : Math.floor(notBeforeDate.getTime() / 1000),
       permitted_hours: {
         start: utcStartTime,

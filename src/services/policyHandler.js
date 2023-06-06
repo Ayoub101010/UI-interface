@@ -54,7 +54,7 @@ export async function setProperty(prop) {
  * @param {object} prop Object containing property value to be set
  */
 export async function deleteProperty(prop) {
-  console.log("run setProperty");
+  console.log("run deleteProperty");
   const response = await fetch(
     DEVICE_CONTROL_CENTER + REST_API_DELETE_PROPERTIES,
     {
@@ -68,7 +68,6 @@ export async function deleteProperty(prop) {
     }
   );
   const jsonData = await response.json();
-  console.log(jsonData);
   return jsonData;
 }
 
