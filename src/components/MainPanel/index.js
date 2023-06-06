@@ -9,6 +9,7 @@ import PresetGroups from "../PresetGroups/index";
 import "../MainPanel/MainPanel.css";
 import Modal from "../Modal/index";
 import ModalComponent from "../Modal/index";
+import { useLocation } from "react-router-dom";
 import {
   getAllProperties,
   setProperty,
@@ -20,6 +21,7 @@ import {
   getModels,
   getSoftwareVersion,
 } from "../../services/dataUtils";
+import { useEffect } from "react";
 
 const initConfig = () => ({
   sw_version: getSoftwareVersion(),
@@ -38,6 +40,7 @@ function MainPanel() {
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [errorModalShown, setErrorModalShown] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
+  const location = useLocation();
 
   const onPercentageChange = (evt) => {
     const { value } = evt.target;
@@ -46,7 +49,12 @@ function MainPanel() {
       coverage: value / 100,
     }));
   };
-
+useEffect( () => {
+  const data = location.state;
+  if (data) {
+    setConfig(data);
+  }
+}, []) 
   const onCityChange = (selectedCities) => {
     setConfig((prevState) => ({
       ...prevState,
@@ -110,7 +118,7 @@ function MainPanel() {
 
   const closeConfirmModal = (evt) => {
     if (evt && evt.target.name === "ok") {
-      config.tag = Date.now(); // Unix timestamp in milliseconds
+      config.tag = config.tag ? config.tag : Date.now(); // Unix timestamp in milliseconds
       const properties = generateProps(config);
       console.log(properties);
       try {

@@ -4,9 +4,22 @@ import Button from "react-bootstrap/Button";
 import "./ReviewUpdates.css";
 import { getAllProperties } from "../../services/policyHandler";
 import { getConfigsFromProperties } from "../../services/policyUtils";
+import { useNavigate } from "react-router-dom";
+
 function ReviewUpdates({ onDelete }) {
   const [hoverIndex, setHoverIndex] = useState(-1);
-  const [configs, setConfigs] = useState([]);
+  // const [configs, setConfigs] = useState([({
+  //   sw_version: "126",
+  //   coverage: 1,
+  //   models: ["PDS","MBOX"],
+  //   cities: ["Salamanca"],
+  //   not_before: null,
+  //   permitted_hours: {
+  //     start: "00:00:00",
+  //     end: "00:00:00",
+  //   },
+  // })]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const prepareConfigs = async () => {
@@ -31,6 +44,9 @@ function ReviewUpdates({ onDelete }) {
   const handleDelete = (index) => {
     onDelete(index);
   };
+  const handleClick = (config) => {
+    navigate("/ux", { state: config });
+  };
 
   return (
     <div>
@@ -51,9 +67,7 @@ function ReviewUpdates({ onDelete }) {
           </tr>
         </thead>
         <tbody className="Tbody">
-
           {configs.map((config, index) => (
-
             <tr
               key={index}
               onMouseEnter={() => handleHover(index)}
@@ -77,7 +91,11 @@ function ReviewUpdates({ onDelete }) {
                 )}
               </td>
               <td>
-                <Button className="btnA" variant="primary">
+                <Button
+                  className="btnA"
+                  variant="primary"
+                  onClick={() => handleClick(config)}
+                >
                   Edit
                 </Button>
                 <Button
@@ -90,7 +108,6 @@ function ReviewUpdates({ onDelete }) {
               </td>
             </tr>
           ))}
-
         </tbody>
       </Table>
     </div>

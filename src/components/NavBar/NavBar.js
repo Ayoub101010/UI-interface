@@ -1,54 +1,32 @@
 import React, { useState } from "react";
+import { Routes, Route, BrowserRouter, Link } from "react-router-dom";
 import MainPanel from "../MainPanel";
 import Body from "../Body/body";
 import ReviewUpdates from "../ReviewUpdates";
 import "./NavBar.css";
 
 function NavBar({ onDelete }) {
-  const [activeItem, setActiveItem] = useState(null);
-  const [properties, setProperties] = useState([]);
-
-  const handleNavItemClick = (event) => {
-    const clickedItem = event.target.getAttribute("href");
-    setActiveItem(clickedItem);
-  };
-
-  const handlePropertyAdd = (newProperty) => {
-    setProperties((prevProperties) => [...prevProperties, newProperty]);
-  };
-  const handleDelete = (index) => {
-    setProperties((prevProperties) => {
-      const updatedProperties = [...prevProperties];
-      updatedProperties.splice(index, 1);
-      return updatedProperties;
-    });
-  };
-  
-  
+  const handleDelete = () => {};
 
   return (
-    <>
+    <BrowserRouter>
       <header>
         <nav>
           <ul>
             <li>
-              <a href="#PSR" onClick={handleNavItemClick}>
-                Phased SSU Rollout
-              </a>
+              <Link to="/ux">Phased SSU Rollout</Link>
             </li>
             <li>
-              <a href="#ADA">ADA Management</a>
+              <Link to="/ux/ada">ADA Management</Link>
             </li>
             <li>
-              <a href="#ADI">ADI Management</a>
+              <Link to="/ux/adi">ADI Management</Link>
             </li>
             <li>
-              <a href="#RSU" onClick={handleNavItemClick}>
-                Review Scheduled Updates
-              </a>
+              <Link to="/ux/review">Review Scheduled Updates</Link>
             </li>
             <li>
-              <a href="#RSU">Log History</a>
+              <Link to="/ux/history">Log History</Link>
             </li>
 
             <li
@@ -65,24 +43,26 @@ function NavBar({ onDelete }) {
         </nav>
       </header>
 
-      {activeItem === "#PSR" && (
-        <>
-          <Body />
-          <MainPanel onPropertyAdd={handlePropertyAdd} />
-        </>
-      )}
-
-      {activeItem === "#RSU" && (
-        <ReviewUpdates properties={properties} onDelete={handleDelete} />
-      )}
-
-      {activeItem !== "#PSR" && activeItem !== "#RSU" && (
-        <div>
-          <Body />
-          <MainPanel />
-        </div>
-      )}
-    </>
+      <Routes>
+        <Route
+          path="/ux"
+          element={
+            <React.Fragment>
+              <Body />
+              <MainPanel />
+            </React.Fragment>
+          }
+        />
+        <Route
+          path="/ux/review"
+          element={
+            <React.Fragment>
+              <ReviewUpdates />
+            </React.Fragment>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

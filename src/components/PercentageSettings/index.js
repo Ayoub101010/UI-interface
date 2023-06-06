@@ -18,18 +18,6 @@ function PercentageSettings(props) {
           value={props.coverage}
           onChange={props.onChange}
         />
-        <div>
-          <input
-            type="text"
-            id="inp1"
-            name="coverage"
-            className="form-control"
-            placeholder="Enter your percentage"
-            value={props.coverage}
-            onChange={props.onChange}
-          />
-          <br />
-        </div>
       </div>
     </section>
   );
