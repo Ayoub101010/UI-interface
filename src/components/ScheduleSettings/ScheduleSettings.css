@@ -58,7 +58,7 @@
 .Square5 {
   width: 380px;
   height: 100px;
-  margin-top: 2px;
+  margin-top: 10px;
   background-color: rgb(255, 255, 255);
   border: 1px solid rgba(0, 0, 0, 0.6);
   color: rgb(0, 0, 0);
@@ -66,3 +66,4 @@
   margin-left: 20px;
   border: 1px solid black;
 }
+

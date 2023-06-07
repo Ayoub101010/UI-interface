@@ -5,6 +5,7 @@ import "./ReviewUpdates.css";
 import { deleteProperty, getAllProperties } from "../../services/policyHandler";
 import { getConfigsFromProperties } from "../../services/policyUtils";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 function ReviewUpdates({ onDelete }) {
   const [hoverIndex, setHoverIndex] = useState(-1);
@@ -16,7 +17,7 @@ function ReviewUpdates({ onDelete }) {
     const prepareConfigs = async () => {
       try {
         const properties = await getAllProperties({ ns: "sysdl" });
-        setProps(properties)
+        setProps(properties);
         const cfgs = getConfigsFromProperties(properties);
         console.log(cfgs);
         setConfigs(cfgs);
@@ -33,13 +34,13 @@ function ReviewUpdates({ onDelete }) {
 
   const handleDelete = (config) => {
     props.forEach((prop) => {
-      if (prop.tag === config.tag){
+      if (prop.tag === config.tag) {
         console.log("deleting prop");
         deleteProperty(prop);
       }
     });
-    setConfigs(configs.filter((c) => c.tag !== config.tag))
-    setProps(props.filter((p) => p.tag !== config.tag))
+    setConfigs(configs.filter((c) => c.tag !== config.tag));
+    setProps(props.filter((p) => p.tag !== config.tag));
   };
   const handleClick = (config) => {
     navigate("/ux", { state: config });
@@ -58,7 +59,7 @@ function ReviewUpdates({ onDelete }) {
             <th>Dates</th>
             <th>Version</th>
             <th>Devices / %</th>
-            <th>STD Models</th>
+            <th>STB Models</th>
             <th>Cities</th>
             <th>Actions</th>
           </tr>
@@ -70,19 +71,27 @@ function ReviewUpdates({ onDelete }) {
               onMouseEnter={() => handleHover(index)}
               onMouseLeave={() => handleHover(-1)}
             >
-              <td>{new Date(config.not_before * 1000).toLocaleString()}</td>
+              <td>{moment.unix(config.not_before).format("YYYY-MM-DD")}</td>
               <td>{config.sw_version}</td>
-              <td>{config.coverage}</td>
-              <td>{config.models}</td>
+              <td>{config.coverage * 100}</td>
+              <td>{config.models.join(", ")}</td>
               <td>
                 {config.cities.length > 0 && (
                   <div className="hover-container">
-                    <span>{config.cities.length}</span>&nbsp;
-                    <a href="#" className="hover-link">
-                      (Click to view)
-                    </a>
-                    {hoverIndex === index && (
-                      <div className="hover-box">{config.cities}</div>
+                    {config.cities.length > 0 && (
+                      <div className="hover-container">
+                        <span>{config.cities.length}</span>&nbsp;
+                        <a href="#" className="hover-link">
+                          (Click to view)
+                        </a>
+                        {hoverIndex === index && (
+                          <div className="hover-box">
+                            {config.cities.map((city, cityIndex) => (
+                              <div key={cityIndex}>{city}</div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     )}
                   </div>
                 )}

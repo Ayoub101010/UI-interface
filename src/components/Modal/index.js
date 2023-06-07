@@ -7,7 +7,7 @@ function ErrorModal({ show, onHide, errorMessages }) {
   return (
     <Modal className="model" show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Error</Modal.Title>
+        <Modal.Title style={{ color: "brown" }}>Error !</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {errorMessages.map((message, index) => (

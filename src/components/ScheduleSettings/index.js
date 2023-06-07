@@ -127,11 +127,10 @@ function ScheduleSettings({ onScheduleChange }) {
       </div>
       <section>
         <div className="Square5">
-          <p>
+          <p className="PUH"><br></br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Permitted
             <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upgrade Hours
           </p>
-          <br></br>
           <br></br>
           <div className="begHrs">
             <TimePicker

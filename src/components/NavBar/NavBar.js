@@ -5,7 +5,7 @@ import Body from "../Body/body";
 import ReviewUpdates from "../ReviewUpdates";
 import "./NavBar.css";
 
-function NavBar({ onDelete }) {
+function NavBar() {
   const handleDelete = () => {};
 
   return (
@@ -28,16 +28,17 @@ function NavBar({ onDelete }) {
             <li>
               <Link to="/ux/history">Log History</Link>
             </li>
-
             <li
               style={{
-                float: "right",
-                fontFamily: "Bahnschrift",
-                color: "black",
-                marginTop: "15px",
+                position: "relative",
+                marginLeft: "1200px",
+                marginTop: "-66px",
               }}
             >
-              Megacable - Device Control Center
+              <img
+                src={process.env.PUBLIC_URL + "/LOGOr.png"}
+                style={{ position: "absolute", top: "15px" }}
+              />
             </li>
           </ul>
         </nav>
