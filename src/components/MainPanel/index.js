@@ -10,7 +10,11 @@ import "../MainPanel/MainPanel.css";
 import Modal from "../Modal/index";
 import ModalComponent from "../Modal/index";
 import { useLocation } from "react-router-dom";
-import { setProperties } from "../../services/policyHandler";
+import {
+  deleteProperties,
+  getProperties,
+  setProperties,
+} from "../../services/policyHandler";
 
 import {
   getModels,
@@ -31,19 +35,25 @@ const initConfig = () => ({
   },
 });
 
-function MainPanel({preset}) {
+function MainPanel({ preset }) {
   const [config, setConfig] = useState(initConfig);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [errorModalShown, setErrorModalShown] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
 
   const location = useLocation();
-  if (preset && preset.key) 
-  {
-    console.log('got a preset', preset);
-    const config = JSON.parse(preset.value)
-    //setConfig(config) 
-   }
+  if (preset && preset.key) {
+    console.log("got a preset", preset);
+    const config = JSON.parse(preset.value);
+    //setConfig(config)
+  }
+  useEffect(() => {
+    const data = location.state;
+    if (data) {
+      setConfig(data);
+    }
+  }, []);
+
   useEffect(() => {
     const data = location.state;
     if (data) {
@@ -58,6 +68,12 @@ function MainPanel({preset}) {
       coverage: value / 100,
     }));
   };
+  // const onCityChange = (selectedCities) => {
+  //   setConfig((prevState) => ({
+  //     ...prevState,
+  //     coverage: value / 100,
+  //   }));
+  // };
 
   const onCityChange = (selectedAreaIds) => {
     setConfig((prevState) => ({
@@ -75,7 +91,7 @@ function MainPanel({preset}) {
 
   const onSavePreset = async (title) => {
     console.log("save preset");
-    const result = await savePreset(title, config)
+    const result = await savePreset(title, config);
   };
 
   const onScheduleChange = (schedule) => {
@@ -123,20 +139,42 @@ function MainPanel({preset}) {
   const areaIds = config.areaIds;
   const models = config.models;
   const targetedDeviceNum = getNumberOfDevices(areaIds, models);
-  const closeConfirmModal = (evt) => {
+  // const closeConfirmModal = (evt) => {
+
+  const closeConfirmModal = async (evt) => {
     if (evt && evt.target.name === "ok") {
-      config.tag = config.tag ? config.tag : Date.now(); // Unix timestamp in milliseconds
-      const properties = generateProps(config);
-      console.log(config);
-      console.log(properties);
-      try {
-        setProperties(properties);
-        console.log("onClick done");
-      } catch (error) {
-        console.log("call failed");
-        setErrorModalShown(true);
+      const editMode = !!config.tag;
+
+      // in Edit mode cleanup properties with specific tag
+      if (editMode) {
+        console.log("Edit mode");
+
+        const props = await getProperties({ tag: config.tag });
+        if (props.tag === config.tag) {
+          deleteProperties([props]);
+        }
+        // props.forEach((prop) => {
+        //   if (prop.tag === config.tag) {
+        //     console.log("deleting prop");
+        //     deleteProperty(prop);
       }
+    } else {
+      config.tag = Date.now();
     }
+    console.log("generate props");
+
+    const properties = generateProps(config);
+    console.log(config);
+    console.log(properties);
+    try {
+      setProperties(properties);
+
+      console.log("onClick done");
+    } catch (error) {
+      console.log("call failed");
+      setErrorModalShown(true);
+    }
+
     setConfirmModalShown(false);
   };
 
