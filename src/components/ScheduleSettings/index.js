@@ -14,9 +14,14 @@ function ScheduleSettings({ onScheduleChange }) {
   const [notBeforeDate, setNotBeforeDate] = useState(new Date());
   const [selectedStartTime, setSelectedStartTime] = useState("10:00");
   const [selectedEndTime, setSelectedEndTime] = useState("10:00");
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    // if As SOON is selected you can't pick a date
+    if (selectedOption === "immediate") {
+      setIsDisabled(false);
+    } else setIsDisabled(true);
     const utcStartTime = moment(selectedStartTime, "HH:mm")
       .utc()
       .format("HH:mm");
@@ -118,6 +123,7 @@ function ScheduleSettings({ onScheduleChange }) {
           Not before{" "}
           <div className="date">
             <DatePicker
+              disabled={isDisabled}
               wrapperClassName="datepicker"
               selected={notBeforeDate}
               onChange={onDateChange}
@@ -127,7 +133,8 @@ function ScheduleSettings({ onScheduleChange }) {
       </div>
       <section>
         <div className="Square5">
-          <p className="PUH"><br></br>
+          <p className="PUH">
+            <br></br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Permitted
             <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upgrade Hours
           </p>
