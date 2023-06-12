@@ -31,14 +31,19 @@ const initConfig = () => ({
   },
 });
 
-function MainPanel() {
+function MainPanel({preset}) {
   const [config, setConfig] = useState(initConfig);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [errorModalShown, setErrorModalShown] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
 
   const location = useLocation();
-
+  if (preset && preset.key) 
+  {
+    console.log('got a preset', preset);
+    const config = JSON.parse(preset.value)
+    //setConfig(config) 
+   }
   useEffect(() => {
     const data = location.state;
     if (data) {

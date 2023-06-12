@@ -55,7 +55,6 @@ function NavBar() {
           element={
             <React.Fragment>
               <Body />
-              <MainPanel />
             </React.Fragment>
           }
         />
