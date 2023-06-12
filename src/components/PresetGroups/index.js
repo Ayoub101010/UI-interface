@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PresetGroups.css";
 
-function PresetGroups() {
+function PresetGroups({ onSavePreset }) {
+  const [title, setTitle] = useState("");
+
+  const onChange = (evt) => {
+    const value = evt.target.value;
+    setTitle(value);
+  };
+
+  const onClick = () => {
+    console.log("save preset", title);
+    onSavePreset(title);
+  };
+
   return (
     <section>
       <div className="square6">
@@ -10,8 +22,19 @@ function PresetGroups() {
         </div>
         <p>&nbsp;&nbsp;Enter name for saving new Preset Group </p>
         <br></br>
-        <input type="text" className="form-control" id="inp2" />{" "}
-        <button type="button" id="Btn" className="btn-success">
+        <input
+          type="text"
+          className="form-control"
+          id="inp2"
+          onChange={onChange}
+          value={title}
+        />{" "}
+        <button
+          type="button"
+          id="Btn"
+          className="btn-success"
+          onClick={onClick}
+        >
           Save
         </button>
       </div>

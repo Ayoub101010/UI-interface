@@ -1,4 +1,5 @@
 import { getAreaIds, getModels } from "./dataUtils";
+import { getClientSettings, setClientSettings } from "./policyHandler";
 
 export const getConfigsFromProperties = (props) => {
   // group properties by tag.
@@ -179,4 +180,27 @@ const getPermittedTimeProps = (config) => {
 
 export const generateProps = (config) => {
   return [...getOtaProps(config), ...getPermittedTimeProps(config)];
+};
+
+export const savePreset = async (title, config) => {
+  const result = await setClientSettings([
+    {
+      expires_by: null,
+      key: title,
+      ns: "ux::perset",
+      value: JSON.stringify(config),
+    },
+  ]);
+  return result
+};
+
+export const loadPresets = async () => {
+  const result = await getClientSettings(
+    {
+
+      ns: "ux::perset",
+
+    }
+  );
+  return result
 };

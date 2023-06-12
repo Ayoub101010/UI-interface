@@ -4,7 +4,7 @@ import ModelSettings from "../ModelSettings/index";
 import GeoSettings from "../GeoSettings/index";
 import ScheduleSettings from "../ScheduleSettings/index";
 import UpgradeStatistics from "../UpgradeStatistics/index";
-import { generateProps } from "../../services/policyUtils";
+import { generateProps, savePreset } from "../../services/policyUtils";
 import PresetGroups from "../PresetGroups/index";
 import "../MainPanel/MainPanel.css";
 import Modal from "../Modal/index";
@@ -66,6 +66,11 @@ function MainPanel() {
       ...prevState,
       models: selectedModels,
     }));
+  };
+
+  const onSavePreset = async (title) => {
+    console.log("save preset");
+    const result = await savePreset(title, config)
   };
 
   const onScheduleChange = (schedule) => {
@@ -159,7 +164,7 @@ function MainPanel() {
         >
           Apply SSU Rollout Policy
         </button>
-        <PresetGroups />
+        <PresetGroups onSavePreset={onSavePreset} />
       </div>
     </section>
   );

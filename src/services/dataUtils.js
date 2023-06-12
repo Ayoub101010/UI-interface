@@ -1,4 +1,4 @@
-import { getClientSettings } from "./policyHandler";
+import { getClientSettings, setClientSettings } from "./policyHandler";
 let g_Cities = [];
 
 export const initSettings = async () => {
@@ -12,6 +12,9 @@ export const initSettings = async () => {
       g_Cities = JSON.parse(settings[0].value);
     }
   }
+
+
+
 };
 
 export const getCities = () => {
