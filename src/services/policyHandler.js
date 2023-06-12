@@ -108,7 +108,7 @@ export async function deleteProperties(props) {
  */
 export async function getClientSettings(query) {
   query = query ? query : {};
-  console.log("run getClientSetting:", query);
+  console.log("run getClientSettings:", query);
   const response = await fetch(
     DEVICE_CONTROL_CENTER + REST_API_ENUM_CLIENT_SETTINGS,
     {

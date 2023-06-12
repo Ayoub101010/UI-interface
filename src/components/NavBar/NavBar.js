@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter, Link } from "react-router-dom";
 import MainPanel from "../MainPanel";
 import Body from "../Body/body";
 import ReviewUpdates from "../ReviewUpdates";
 import "./NavBar.css";
+import { initSettings } from "../../services/dataUtils";
 
 function NavBar() {
-  const handleDelete = () => {};
-
+  useEffect(() => {
+    const init = async () => {
+      await initSettings();
+    };
+    init();
+  }, []);
   return (
     <BrowserRouter>
       <header>
