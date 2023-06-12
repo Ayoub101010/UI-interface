@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import "./ReviewUpdates.css";
-import { deleteProperty, getAllProperties } from "../../services/policyHandler";
+import { deleteProperty, getProperties } from "../../services/policyHandler";
 import { getConfigsFromProperties } from "../../services/policyUtils";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -17,7 +17,7 @@ function ReviewUpdates({ onDelete }) {
   useEffect(() => {
     const prepareConfigs = async () => {
       try {
-        const properties = await getAllProperties({ ns: "sysdl" });
+        const properties = await getProperties({ ns: "sysdl" });
         setProps(properties);
         const cfgs = getConfigsFromProperties(properties);
         console.log(cfgs);
@@ -88,8 +88,7 @@ function ReviewUpdates({ onDelete }) {
                         {hoverIndex === index && (
                           <div className="hover-box">
                             {config.areaIds.map((areaId, cityIndex) => (
-                              <div key={cityIndex}>{ getAreaName(areaId) 
-                              }</div>
+                              <div key={cityIndex}>{getAreaName(areaId)}</div>
                             ))}
                           </div>
                         )}
@@ -103,7 +102,7 @@ function ReviewUpdates({ onDelete }) {
                   className="btnA"
                   variant="primary"
                   onClick={() => handleClick(config)}
-               >
+                >
                   Edit
                 </Button>
                 <Button

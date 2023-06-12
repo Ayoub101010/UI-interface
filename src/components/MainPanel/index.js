@@ -10,11 +10,7 @@ import "../MainPanel/MainPanel.css";
 import Modal from "../Modal/index";
 import ModalComponent from "../Modal/index";
 import { useLocation } from "react-router-dom";
-import {
-  getAllProperties,
-  setProperty,
-  deleteProperty,
-} from "../../services/policyHandler";
+import { setProperties } from "../../services/policyHandler";
 
 import {
   getModels,
@@ -124,9 +120,7 @@ function MainPanel() {
       console.log(config);
       console.log(properties);
       try {
-        properties.forEach((prop) => {
-          setProperty(prop);
-        });
+        setProperties(properties);
         console.log("onClick done");
       } catch (error) {
         console.log("call failed");
