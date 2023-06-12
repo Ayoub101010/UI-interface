@@ -2,7 +2,6 @@ import React from "react";
 import "./GeoSettings.css";
 import { getCities } from "../../services/dataUtils";
 
-
 function GeoSettings({ selectedAreaIds, onCityChange }) {
   const cities = getCities();
   const handleCityChange = (event) => {
@@ -12,7 +11,9 @@ function GeoSettings({ selectedAreaIds, onCityChange }) {
     if (isChecked) {
       onCityChange([...selectedAreaIds, selectedAreaId]);
     } else {
-      const updatedCities = selectedAreaIds.filter((areaId) => areaId !== selectedAreaId);
+      const updatedCities = selectedAreaIds.filter(
+        (areaId) => areaId !== selectedAreaId
+      );
       onCityChange(updatedCities);
     }
   };

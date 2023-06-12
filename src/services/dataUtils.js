@@ -1,5 +1,4 @@
 export const getCities = () => {
-  // Code pour obtenir la liste des villes
   const citiesData = [
     {
       city: "Guanajuato",
@@ -10,7 +9,7 @@ export const getCities = () => {
         { model: "747MEG", device_count: "17980" },
       ],
     },
-    
+
     {
       city: "Guadalajara",
       user_area_id: "3",
@@ -49,26 +48,36 @@ export const getCities = () => {
     },
   ];
   return citiesData;
-
-  return citiesData.map((e)=>(e.user_area_id));
 };
 
+export function getAreaName(areaId) {
+  const result = getCities().filter((city) => city.user_area_id === areaId);
+  if (result && result.length > 0) {
+    return result[0].city;
+  }
+}
+
+export function getAreaIds() {
+  return getCities().map((e) => e.user_area_id);
+}
+
 export const getModels = () => {
-  // Code pour obtenir la liste des modèles
   const models = ["MBOXH4", "747MEG", "PDS2140"];
   return models;
 };
+
 export const getSoftwareVersion = () => {
   const softwareVersion = "126";
   return softwareVersion;
 };
 
-export function getNumberOfDevices(city, model) {
+export function getNumberOfDevices(areaIds, models) {
   let totalCount = 0;
-  for (const item of city) {
-    if (item.user_area_id === city && item.device_models.includes(model)) { 
+  const cities = getCities();
+  for (const item of cities) {
+    if (areaIds.includes(item.user_area_id)) {
       for (const device of item.device_models) {
-        if (device.model === model) {
+        if (models.includes(device.model)) {
           totalCount += parseInt(device.device_count);
         }
       }
@@ -76,5 +85,3 @@ export function getNumberOfDevices(city, model) {
   }
   return totalCount;
 }
-
-

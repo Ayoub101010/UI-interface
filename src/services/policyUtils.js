@@ -1,4 +1,4 @@
-import { getCities, getModels } from "./dataUtils";
+import { getAreaIds, getModels } from "./dataUtils";
 
 export const getConfigsFromProperties = (props) => {
   // group properties by tag.
@@ -20,7 +20,7 @@ export const getConfigsFromProperties = (props) => {
     // and collect config information
     // console.log(key, ': ',groupedData[key])
     const config = { tag: key, permitted_hours: {} };
-    const cities = new Set();
+    const areaIds = new Set();
     const models = new Set();
     groupedData[key].forEach((element) => {
       if (
@@ -46,9 +46,9 @@ export const getConfigsFromProperties = (props) => {
         ) {
           config.permitted_hours.end = element.value;
         }
-        const city = element?.filter?.device?.user_area_id;
-        if (city) {
-          cities.add(city);
+        const areaId = element?.filter?.device?.user_area_id;
+        if (areaId) {
+          areaIds.add(areaId);
         }
         const hwModel = element?.filter?.device?.device_model;
         if (hwModel) {
@@ -63,7 +63,7 @@ export const getConfigsFromProperties = (props) => {
       }
     });
     // if no city is found in all properties that means that the config is for all cities
-    config.cities = cities.size ? Array.from(cities) : getCities();
+    config.areaIds = areaIds.size ? Array.from(areaIds) : getAreaIds();
     // if no model is found in all properties that means that the config is for all models
     config.models = models.size ? Array.from(models) : getModels();
     configs.push(config);
@@ -75,7 +75,7 @@ const getOtaProps = (config) => {
   const props = [];
 
   //Specific accept policies
-  const allCitiesSelected = config.cities.length === getCities().length;
+  const allAreasSelected = config.areaIds.length === getAreaIds().length;
   const allModelsSelected = config.models.length === getModels().length;
   let prop = {
     comment: null,
@@ -91,12 +91,12 @@ const getOtaProps = (config) => {
     value: null,
   };
 
-  for (const city of config.cities) {
+  for (const areaId of config.areaIds) {
     for (const model of config.models) {
-      if (allCitiesSelected && allModelsSelected) {
+      if (allAreasSelected && allModelsSelected) {
         // props.push(prop);
         return props;
-      } else if (allCitiesSelected) {
+      } else if (allAreasSelected) {
         props.push({
           ...prop,
           filter: {
@@ -110,7 +110,7 @@ const getOtaProps = (config) => {
           ...prop,
           filter: {
             device: {
-              user_area_id: city,
+              user_area_id: areaId,
             },
           },
         });
@@ -119,7 +119,7 @@ const getOtaProps = (config) => {
           ...prop,
           filter: {
             device: {
-              user_area_id: city,
+              user_area_id: areaId,
               device_model: model,
             },
           },

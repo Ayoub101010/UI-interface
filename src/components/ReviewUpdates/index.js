@@ -6,6 +6,7 @@ import { deleteProperty, getAllProperties } from "../../services/policyHandler";
 import { getConfigsFromProperties } from "../../services/policyUtils";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { getAreaName } from "../../services/dataUtils";
 
 function ReviewUpdates({ onDelete }) {
   const [hoverIndex, setHoverIndex] = useState(-1);
@@ -76,18 +77,19 @@ function ReviewUpdates({ onDelete }) {
               <td>{config.coverage * 100}</td>
               <td>{config.models.join(", ")}</td>
               <td>
-                {config.cities.length > 0 && (
+                {config.areaIds.length > 0 && (
                   <div className="hover-container">
-                    {config.cities.length > 0 && (
+                    {config.areaIds.length > 0 && (
                       <div className="hover-container">
-                        <span>{config.cities.length}</span>&nbsp;
+                        <span>{config.areaIds.length}</span>&nbsp;
                         <a href="#" className="hover-link">
                           (Click to view)
                         </a>
                         {hoverIndex === index && (
                           <div className="hover-box">
-                            {config.cities.map((city, cityIndex) => (
-                              <div key={cityIndex}>{city}</div>
+                            {config.areaIds.map((areaId, cityIndex) => (
+                              <div key={cityIndex}>{ getAreaName(areaId) 
+                              }</div>
                             ))}
                           </div>
                         )}
@@ -101,7 +103,7 @@ function ReviewUpdates({ onDelete }) {
                   className="btnA"
                   variant="primary"
                   onClick={() => handleClick(config)}
-                >
+               >
                   Edit
                 </Button>
                 <Button

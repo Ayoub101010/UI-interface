@@ -17,17 +17,17 @@ import {
 } from "../../services/policyHandler";
 
 import {
-  getCities,
   getModels,
   getSoftwareVersion,
-  getNumberOfDevices
+  getNumberOfDevices,
+  getAreaIds,
 } from "../../services/dataUtils";
 
 const initConfig = () => ({
   sw_version: getSoftwareVersion(),
   coverage: 1,
   models: getModels(),
-  cities: getCities().map((e)=>(e.user_area_id)),
+  areaIds: getAreaIds(),
   not_before: Math.floor(Date.now() / 1000),
   permitted_hours: {
     start: "00:00:00",
@@ -40,7 +40,6 @@ function MainPanel() {
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [errorModalShown, setErrorModalShown] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
-  //const [upgradeTargetedDeviceNum, setUpgradeTargetedDeviceNum] = useState(0);
 
   const location = useLocation();
 
@@ -59,10 +58,10 @@ function MainPanel() {
     }));
   };
 
-  const onCityChange = (selectedCities) => {
+  const onCityChange = (selectedAreaIds) => {
     setConfig((prevState) => ({
       ...prevState,
-      cities: selectedCities,
+      areaIds: selectedAreaIds,
     }));
   };
 
@@ -74,7 +73,7 @@ function MainPanel() {
   };
 
   const onScheduleChange = (schedule) => {
-    console.log('onScheduleChange', schedule);
+    console.log("onScheduleChange", schedule);
     setConfig((prevState) => ({
       ...prevState,
       not_before: schedule.not_before,
@@ -85,17 +84,13 @@ function MainPanel() {
   const validateConfig = () => {
     const errors = [];
 
-    if (
-      isNaN(config.coverage) ||
-      config.coverage < 0 ||
-      config.coverage > 1
-    ) {
+    if (isNaN(config.coverage) || config.coverage < 0 || config.coverage > 1) {
       errors.push(
         "- Invalid coverage percentage. Please enter a value between 0 and 100."
       );
     }
 
-    if (config.cities.length === 0) {
+    if (config.areaIds.length === 0) {
       errors.push("- Please select at least one city.");
     }
 
@@ -119,9 +114,9 @@ function MainPanel() {
   };
 
   const coverage = config.coverage * 100;
-  const cities = config.cities;
+  const areaIds = config.areaIds;
   const models = config.models;
-
+  const targetedDeviceNum = getNumberOfDevices(areaIds, models);
   const closeConfirmModal = (evt) => {
     if (evt && evt.target.name === "ok") {
       config.tag = config.tag ? config.tag : Date.now(); // Unix timestamp in milliseconds
@@ -159,9 +154,9 @@ function MainPanel() {
       <div className="square-container">
         <PercentageSettings coverage={coverage} onChange={onPercentageChange} />
         <ModelSettings onModelChange={onModelChange} selectedModels={models} />
-        <GeoSettings onCityChange={onCityChange} selectedAreaIds={cities} />
+        <GeoSettings onCityChange={onCityChange} selectedAreaIds={areaIds} />
         <ScheduleSettings onScheduleChange={onScheduleChange} />
-        <UpgradeStatistics DeviceNum={getNumberOfDevices(cities,models)} />
+        <UpgradeStatistics targetedDeviceNum={targetedDeviceNum} />
 
         <button
           type="button"
