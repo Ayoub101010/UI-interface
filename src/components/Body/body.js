@@ -1,5 +1,6 @@
 import React from "react";
 import "./Body.css";
+import { getSoftwareVersion } from "../../services/dataUtils";
 
 function Body() {
   return (
@@ -11,12 +12,12 @@ function Body() {
         <input
           type="text"
           id="Version"
-          value="1.3.6"
+          value={getSoftwareVersion()}
           style={{ fontWeight: "bold" }}
         />
         <select className="Group">
           <option value="" disabled selected>
-            Use an existing Present Group
+            Use an existing Preset Group
           </option>
         </select>{" "}
       </div>

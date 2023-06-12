@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PercentageSettings from "../PercentageSettings/index";
 import ModelSettings from "../ModelSettings/index";
 import GeoSettings from "../GeoSettings/index";
@@ -20,14 +20,14 @@ import {
   getCities,
   getModels,
   getSoftwareVersion,
+  getNumberOfDevices
 } from "../../services/dataUtils";
-import { useEffect } from "react";
 
 const initConfig = () => ({
   sw_version: getSoftwareVersion(),
   coverage: 1,
   models: getModels(),
-  cities: getCities(),
+  cities: getCities().map((e)=>(e.user_area_id)),
   not_before: Math.floor(Date.now() / 1000),
   permitted_hours: {
     start: "00:00:00",
@@ -40,22 +40,25 @@ function MainPanel() {
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [errorModalShown, setErrorModalShown] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
+  //const [upgradeTargetedDeviceNum, setUpgradeTargetedDeviceNum] = useState(0);
+
   const location = useLocation();
 
-useEffect( () => {
-  const data = location.state;
-  if (data) {
-    setConfig(data);
-  }
-}, []) 
+  useEffect(() => {
+    const data = location.state;
+    if (data) {
+      setConfig(data);
+    }
+  }, []);
 
-const onPercentageChange = (evt) => {
-  const { value } = evt.target;
-  setConfig((prevState) => ({
-    ...prevState,
-    coverage: value / 100,
-  }));
-};
+  const onPercentageChange = (evt) => {
+    const { value } = evt.target;
+    setConfig((prevState) => ({
+      ...prevState,
+      coverage: value / 100,
+    }));
+  };
+
   const onCityChange = (selectedCities) => {
     setConfig((prevState) => ({
       ...prevState,
@@ -78,25 +81,24 @@ const onPercentageChange = (evt) => {
       permitted_hours: schedule.permitted_hours,
     }));
   };
+
   const validateConfig = () => {
     const errors = [];
-    // Validate coverage percentage
+
     if (
       isNaN(config.coverage) ||
       config.coverage < 0 ||
-      config.coverage > 100
+      config.coverage > 1
     ) {
       errors.push(
         "- Invalid coverage percentage. Please enter a value between 0 and 100."
       );
     }
 
-    // Validate selected cities
     if (config.cities.length === 0) {
       errors.push("- Please select at least one city.");
     }
 
-    // Validate selected models
     if (config.models.length === 0) {
       errors.push("- Please select at least one model.");
     }
@@ -107,6 +109,9 @@ const onPercentageChange = (evt) => {
 
   const onConfirm = () => {
     if (validateConfig()) {
+      setConfig((prevState) => ({
+        ...prevState,
+      }));
       showConfirmModal();
     } else {
       setErrorModalShown(true);
@@ -154,9 +159,9 @@ const onPercentageChange = (evt) => {
       <div className="square-container">
         <PercentageSettings coverage={coverage} onChange={onPercentageChange} />
         <ModelSettings onModelChange={onModelChange} selectedModels={models} />
-        <GeoSettings onCityChange={onCityChange} selectedCities={cities} />
+        <GeoSettings onCityChange={onCityChange} selectedAreaIds={cities} />
         <ScheduleSettings onScheduleChange={onScheduleChange} />
-        <UpgradeStatistics />
+        <UpgradeStatistics DeviceNum={getNumberOfDevices(cities,models)} />
 
         <button
           type="button"

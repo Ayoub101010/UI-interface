@@ -1,6 +1,7 @@
 import React from "react";
 import "./UpgradeStatistics.css";
-function UpgradeStatistics() {
+
+function UpgradeStatistics({ targetedDeviceNum }) {
   return (
     <section>
       <div className="square5">
@@ -9,7 +10,7 @@ function UpgradeStatistics() {
           &nbsp;&nbsp;deployment based on all filters applied:
         </p>
         <p>
-          <strong>&nbsp;&nbsp;264 devices</strong>
+          <strong>&nbsp;&nbsp;{targetedDeviceNum} devices</strong>
         </p>
       </div>
     </section>

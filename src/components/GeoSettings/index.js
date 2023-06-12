@@ -1,25 +1,18 @@
 import React from "react";
 import "./GeoSettings.css";
+import { getCities } from "../../services/dataUtils";
 
 
-function GeoSettings({ selectedCities, onCityChange }) {
-  const cities = [
-    { name: "Guadalajara", id: "city1" },
-    { name: "Mexico City", id: "city2" },
-    { name: "Salamanca", id: "city3" },
-    { name: "Torreon", id: "city4" },
-    { name: "Los Mochis", id: "city5" },
-    { name: "Cancun", id: "city6" },
-  ];
-
+function GeoSettings({ selectedAreaIds, onCityChange }) {
+  const cities = getCities();
   const handleCityChange = (event) => {
-    const cityName = event.target.name;
+    const selectedAreaId = event.target.name;
     const isChecked = event.target.checked;
 
     if (isChecked) {
-      onCityChange([...selectedCities, cityName]);
+      onCityChange([...selectedAreaIds, selectedAreaId]);
     } else {
-      const updatedCities = selectedCities.filter((city) => city !== cityName);
+      const updatedCities = selectedAreaIds.filter((areaId) => areaId !== selectedAreaId);
       onCityChange(updatedCities);
     }
   };
@@ -31,22 +24,22 @@ function GeoSettings({ selectedCities, onCityChange }) {
         <br />
         <div className="square-wrapper">
           {cities.map((city, index) => (
-            <React.Fragment key={city.id}>
+            <React.Fragment key={city.user_area_id}>
               <div className="form-check">
                 &nbsp;&nbsp;
                 <input
                   type="checkbox"
                   className="form-check-input"
-                  id={city.id}
-                  name={city.name}
-                  checked={selectedCities.includes(city.name)}
+                  id={city.user_area_id}
+                  name={city.user_area_id}
+                  checked={selectedAreaIds.includes(city.user_area_id)}
                   onChange={handleCityChange}
                 />
                 <label
                   className="form-check-label square-checkbox"
-                  htmlFor={city.id}
+                  htmlFor={city.user_area_id}
                 >
-                  {city.name}
+                  {city.city}
                 </label>
               </div>
               {index !== cities.length - 1 && <br />}
