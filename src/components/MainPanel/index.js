@@ -15,7 +15,8 @@ import {
   getProperties,
   setProperties,
 } from "../../services/policyHandler";
-import { setSelectedPreset } from "../Body/body";
+import { onSelectPresetChange } from "../Body/body";
+import Body from "../Body/body";
 
 import {
   getModels,
@@ -36,19 +37,19 @@ const initConfig = () => ({
   },
 });
 
-function MainPanel({ preset }) {
+function MainPanel({ presetList, selectedPreset }) {
   const [config, setConfig] = useState(initConfig);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [errorModalShown, setErrorModalShown] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
 
   const location = useLocation();
-  if (preset && preset.key) {
-    console.log("got a preset", preset);
-
-    const config = JSON.parse(preset.value);
-    // setConfig(config);
-  }
+  // if (presetList && presetList.key) {
+  //   setConfig((prevState) => ({
+  //     ...prevState,
+  //     config: JSON.parse(selectedPreset.value),
+  //   }));
+  // }
 
   useEffect(() => {
     const data = location.state;
