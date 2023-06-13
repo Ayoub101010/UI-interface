@@ -18,14 +18,14 @@ function Body() {
     load();
   }, []);
 
- const onSelectPresetChange = (evt) => {
-  console.log('preset', evt.target.value);
-  const result = presetList.filter((p)=> p.key === evt.target.value)
-  if (result && result.length > 0) {
-    setSelectedPreset(result[0])
-  }
-
- }
+  const onSelectPresetChange = (evt) => {
+    console.log("preset", evt.target.value);
+    const result = presetList.filter((p) => p.key === evt.target.value);
+    if (result && result.length > 0) {
+      setSelectedPreset(result[selectedPreset]);
+      // value has been changed
+    }
+  };
   return (
     <>
       <section>
@@ -39,11 +39,15 @@ function Body() {
             value={getSoftwareVersion()}
             style={{ fontWeight: "bold" }}
           />
-          <select className="Group" value={selectedPreset} onChange={onSelectPresetChange}>
+          <select
+            className="Group"
+            value={selectedPreset}
+            onChange={onSelectPresetChange}
+          >
             {presetList.map((preset, index) => (
               <React.Fragment key={preset.key}>
                 <option value={preset.key} selected>
-                {preset.key}
+                  {preset.key}
                 </option>
               </React.Fragment>
             ))}

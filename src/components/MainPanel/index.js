@@ -15,6 +15,7 @@ import {
   getProperties,
   setProperties,
 } from "../../services/policyHandler";
+import { setSelectedPreset } from "../Body/body";
 
 import {
   getModels,
@@ -44,15 +45,10 @@ function MainPanel({ preset }) {
   const location = useLocation();
   if (preset && preset.key) {
     console.log("got a preset", preset);
+
     const config = JSON.parse(preset.value);
-    //setConfig(config)
+    // setConfig(config);
   }
-  useEffect(() => {
-    const data = location.state;
-    if (data) {
-      setConfig(data);
-    }
-  }, []);
 
   useEffect(() => {
     const data = location.state;
@@ -60,6 +56,13 @@ function MainPanel({ preset }) {
       setConfig(data);
     }
   }, []);
+
+  // useEffect(() => {
+  //   const data = location.state;
+  //   if (data) {
+  //     setConfig(data);
+  //   }
+  // }, []);
 
   const onPercentageChange = (evt) => {
     const { value } = evt.target;
