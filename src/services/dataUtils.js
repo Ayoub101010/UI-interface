@@ -12,9 +12,6 @@ export const initSettings = async () => {
       g_Cities = JSON.parse(settings[0].value);
     }
   }
-
-
-
 };
 
 export const getCities = () => {
@@ -46,7 +43,7 @@ export const getSoftwareVersion = () => {
   return softwareVersion;
 };
 
-export function getNumberOfDevices(areaIds, models) {
+export function getNumberOfDevices(coverage, areaIds, models) {
   let totalCount = 0;
   const cities = getCities();
   for (const item of cities) {
@@ -58,5 +55,5 @@ export function getNumberOfDevices(areaIds, models) {
       }
     }
   }
-  return totalCount;
+  return totalCount * coverage;
 }

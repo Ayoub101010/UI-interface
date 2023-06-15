@@ -30,7 +30,7 @@ export const getConfigsFromProperties = (props) => {
         element.key === "OtaRefusedVersion"
       ) {
         if (!config.coverage && element.coverage) {
-          config.coverage = element.coverage;
+          config.coverage = element.coverage * 100;
         }
         if (!config.sw_version && element.key === "OtaRefusedVersion") {
           config.sw_version = element.value;
@@ -80,7 +80,7 @@ const getOtaProps = (config) => {
   const allModelsSelected = config.models.length === getModels().length;
   let prop = {
     comment: null,
-    coverage: config.coverage,
+    coverage: config.coverage / 100,
     coverage_seed: 0,
     enabled: true,
     expires_by: null,
@@ -130,7 +130,7 @@ const getOtaProps = (config) => {
   }
   //Global refuse policy
   props.push({
-    coverage: 1,
+    coverage: config.coverage / 100,
     coverage_seed: 0,
     enabled: true,
     expires_by: null,
@@ -149,7 +149,7 @@ const getPermittedTimeProps = (config) => {
   //Permitted Upgrade Hours
   const props = [];
   props.push({
-    coverage: 1,
+    coverage: config.coverage / 100,
     coverage_seed: 0,
     enabled: true,
     expires_by: null,
@@ -162,7 +162,7 @@ const getPermittedTimeProps = (config) => {
     value: config.permitted_hours.end,
   });
   props.push({
-    coverage: 1,
+    coverage: config.coverage / 100,
     coverage_seed: 0,
     enabled: true,
     expires_by: null,

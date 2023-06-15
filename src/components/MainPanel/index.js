@@ -21,7 +21,7 @@ import {
 
 const initConfig = () => ({
   sw_version: getSoftwareVersion(),
-  coverage: 1,
+  coverage: 100,
   models: getModels(),
   areaIds: getAreaIds(),
   not_before: Math.floor(Date.now() / 1000),
@@ -31,19 +31,21 @@ const initConfig = () => ({
   },
 });
 
-function MainPanel({preset}) {
+function MainPanel({ preset }) {
   const [config, setConfig] = useState(initConfig);
   const [confirmModalShown, setConfirmModalShown] = useState(false);
   const [errorModalShown, setErrorModalShown] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
 
   const location = useLocation();
-  if (preset && preset.key) 
-  {
-    console.log('got a preset', preset);
-    const config = JSON.parse(preset.value)
-    //setConfig(config) 
-   }
+
+  useEffect(() => {
+    if (preset && preset.key) {
+      console.log("c", preset);
+      setConfig(JSON.parse(preset.value));
+    }
+  }, [preset]);
+
   useEffect(() => {
     const data = location.state;
     if (data) {
@@ -52,10 +54,9 @@ function MainPanel({preset}) {
   }, []);
 
   const onPercentageChange = (evt) => {
-    const { value } = evt.target;
     setConfig((prevState) => ({
       ...prevState,
-      coverage: value / 100,
+      coverage: evt.target.value,
     }));
   };
 
@@ -75,7 +76,7 @@ function MainPanel({preset}) {
 
   const onSavePreset = async (title) => {
     console.log("save preset");
-    const result = await savePreset(title, config)
+    const result = await savePreset(title, config);
   };
 
   const onScheduleChange = (schedule) => {
@@ -90,7 +91,11 @@ function MainPanel({preset}) {
   const validateConfig = () => {
     const errors = [];
 
-    if (isNaN(config.coverage) || config.coverage < 0 || config.coverage > 1) {
+    if (
+      isNaN(config.coverage) ||
+      config.coverage < 0 ||
+      config.coverage > 100
+    ) {
       errors.push(
         "- Invalid coverage percentage. Please enter a value between 0 and 100."
       );
@@ -119,16 +124,14 @@ function MainPanel({preset}) {
     }
   };
 
-  const coverage = config.coverage * 100;
+  const coverage = config.coverage;
   const areaIds = config.areaIds;
   const models = config.models;
-  const targetedDeviceNum = getNumberOfDevices(areaIds, models);
+  const targetedDeviceNum = getNumberOfDevices(coverage, areaIds, models);
   const closeConfirmModal = (evt) => {
     if (evt && evt.target.name === "ok") {
       config.tag = config.tag ? config.tag : Date.now(); // Unix timestamp in milliseconds
       const properties = generateProps(config);
-      console.log(config);
-      console.log(properties);
       try {
         setProperties(properties);
         console.log("onClick done");

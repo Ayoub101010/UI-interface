@@ -39,10 +39,15 @@ function Body() {
             value={getSoftwareVersion()}
             style={{ fontWeight: "bold" }}
           />
-          <select className="Group" value={selectedPreset} onChange={onSelectPresetChange}>
-            {presetList.map((preset, index) => (
+          <select className="Group" onChange={onSelectPresetChange}>
+            <React.Fragment key="">
+                <option value="">
+                Use existing preset group
+                </option>
+              </React.Fragment>
+            {presetList.map((preset) => (
               <React.Fragment key={preset.key}>
-                <option value={preset.key} selected>
+                <option value={preset.key}>
                 {preset.key}
                 </option>
               </React.Fragment>

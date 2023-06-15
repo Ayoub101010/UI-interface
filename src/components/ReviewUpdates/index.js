@@ -74,7 +74,7 @@ function ReviewUpdates({ onDelete }) {
             >
               <td>{moment.unix(config.not_before).format("YYYY-MM-DD")}</td>
               <td>{config.sw_version}</td>
-              <td>{config.coverage * 100}</td>
+              <td>{config.coverage}</td>
               <td>{config.models.join(", ")}</td>
               <td>
                 {config.areaIds.length > 0 && (

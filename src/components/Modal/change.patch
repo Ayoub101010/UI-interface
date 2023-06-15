@@ -1,0 +1,163 @@
+diff --git a/src/components/Body/body.js b/src/components/Body/body.js
+index 16ef77e..e3ecfa3 100644
+--- a/src/components/Body/body.js
++++ b/src/components/Body/body.js
+@@ -39,10 +39,15 @@ function Body() {
+             value={getSoftwareVersion()}
+             style={{ fontWeight: "bold" }}
+           />
+-          <select className="Group" value={selectedPreset} onChange={onSelectPresetChange}>
+-            {presetList.map((preset, index) => (
++          <select className="Group" onChange={onSelectPresetChange}>
++            <React.Fragment key="">
++                <option value="">
++                Use existing preset group
++                </option>
++              </React.Fragment>
++            {presetList.map((preset) => (
+               <React.Fragment key={preset.key}>
+-                <option value={preset.key} selected>
++                <option value={preset.key}>
+                 {preset.key}
+                 </option>
+               </React.Fragment>
+diff --git a/src/components/MainPanel/index.js b/src/components/MainPanel/index.js
+index 3f80f42..de5526d 100644
+--- a/src/components/MainPanel/index.js
++++ b/src/components/MainPanel/index.js
+@@ -21,7 +21,7 @@ import {
+ 
+ const initConfig = () => ({
+   sw_version: getSoftwareVersion(),
+-  coverage: 1,
++  coverage: 100,
+   models: getModels(),
+   areaIds: getAreaIds(),
+   not_before: Math.floor(Date.now() / 1000),
+@@ -38,12 +38,15 @@ function MainPanel({preset}) {
+   const [errorMessages, setErrorMessages] = useState([]);
+ 
+   const location = useLocation();
+-  if (preset && preset.key) 
+-  {
+-    console.log('got a preset', preset);
+-    const config = JSON.parse(preset.value)
+-    //setConfig(config) 
+-   }
++
++  useEffect( () => {
++    if (preset && preset.key) {
++      console.log('c', preset)
++      setConfig(JSON.parse(preset.value))
++    }
++  
++  }, [preset])
++
+   useEffect(() => {
+     const data = location.state;
+     if (data) {
+@@ -52,12 +55,11 @@ function MainPanel({preset}) {
+   }, []);
+ 
+   const onPercentageChange = (evt) => {
+-    const { value } = evt.target;
+     setConfig((prevState) => ({
+       ...prevState,
+-      coverage: value / 100,
+-    }));
+-  };
++      coverage: evt.target.value,
++    }))
++  }
+ 
+   const onCityChange = (selectedAreaIds) => {
+     setConfig((prevState) => ({
+@@ -90,7 +92,7 @@ function MainPanel({preset}) {
+   const validateConfig = () => {
+     const errors = [];
+ 
+-    if (isNaN(config.coverage) || config.coverage < 0 || config.coverage > 1) {
++    if (isNaN(config.coverage) || config.coverage < 0 || config.coverage > 100) {
+       errors.push(
+         "- Invalid coverage percentage. Please enter a value between 0 and 100."
+       );
+@@ -119,7 +121,7 @@ function MainPanel({preset}) {
+     }
+   };
+ 
+-  const coverage = config.coverage * 100;
++  const coverage = config.coverage;
+   const areaIds = config.areaIds;
+   const models = config.models;
+   const targetedDeviceNum = getNumberOfDevices(areaIds, models);
+@@ -127,8 +129,6 @@ function MainPanel({preset}) {
+     if (evt && evt.target.name === "ok") {
+       config.tag = config.tag ? config.tag : Date.now(); // Unix timestamp in milliseconds
+       const properties = generateProps(config);
+-      console.log(config);
+-      console.log(properties);
+       try {
+         setProperties(properties);
+         console.log("onClick done");
+diff --git a/src/components/ReviewUpdates/index.js b/src/components/ReviewUpdates/index.js
+index 4c5eef8..c0ad24e 100644
+--- a/src/components/ReviewUpdates/index.js
++++ b/src/components/ReviewUpdates/index.js
+@@ -74,7 +74,7 @@ function ReviewUpdates({ onDelete }) {
+             >
+               <td>{moment.unix(config.not_before).format("YYYY-MM-DD")}</td>
+               <td>{config.sw_version}</td>
+-              <td>{config.coverage * 100}</td>
++              <td>{config.coverage}</td>
+               <td>{config.models.join(", ")}</td>
+               <td>
+                 {config.areaIds.length > 0 && (
+diff --git a/src/services/policyUtils.js b/src/services/policyUtils.js
+index d60f79f..84a10d7 100644
+--- a/src/services/policyUtils.js
++++ b/src/services/policyUtils.js
+@@ -30,7 +30,7 @@ export const getConfigsFromProperties = (props) => {
+         element.key === "OtaRefusedVersion"
+       ) {
+         if (!config.coverage && element.coverage) {
+-          config.coverage = element.coverage;
++          config.coverage = element.coverage * 100;
+         }
+         if (!config.sw_version && element.key === "OtaRefusedVersion") {
+           config.sw_version = element.value;
+@@ -80,7 +80,7 @@ const getOtaProps = (config) => {
+   const allModelsSelected = config.models.length === getModels().length;
+   let prop = {
+     comment: null,
+-    coverage: config.coverage,
++    coverage: config.coverage / 100,
+     coverage_seed: 0,
+     enabled: true,
+     expires_by: null,
+@@ -130,7 +130,7 @@ const getOtaProps = (config) => {
+   }
+   //Global refuse policy
+   props.push({
+-    coverage: 1,
++    coverage: config.coverage / 100,
+     coverage_seed: 0,
+     enabled: true,
+     expires_by: null,
+@@ -149,7 +149,7 @@ const getPermittedTimeProps = (config) => {
+   //Permitted Upgrade Hours
+   const props = [];
+   props.push({
+-    coverage: 1,
++    coverage: config.coverage / 100,
+     coverage_seed: 0,
+     enabled: true,
+     expires_by: null,
+@@ -162,7 +162,7 @@ const getPermittedTimeProps = (config) => {
+     value: config.permitted_hours.end,
+   });
+   props.push({
+-    coverage: 1,
++    coverage: config.coverage / 100,
+     coverage_seed: 0,
+     enabled: true,
+     expires_by: null,
