@@ -30,7 +30,7 @@ export const getConfigsFromProperties = (props) => {
         element.key === "OtaRefusedVersion"
       ) {
         if (!config.coverage && element.coverage) {
-          config.coverage = element.coverage;
+          config.coverage = element.coverage * 100;
         }
         if (!config.sw_version && element.key === "OtaRefusedVersion") {
           config.sw_version = element.value;
@@ -80,7 +80,7 @@ const getOtaProps = (config) => {
   const allModelsSelected = config.models.length === getModels().length;
   let prop = {
     comment: null,
-    coverage: config.coverage,
+    coverage: config.coverage / 100,
     coverage_seed: 0,
     enabled: true,
     expires_by: null,
@@ -191,16 +191,12 @@ export const savePreset = async (title, config) => {
       value: JSON.stringify(config),
     },
   ]);
-  return result
+  return result;
 };
 
 export const loadPresets = async () => {
-  const result = await getClientSettings(
-    {
-
-      ns: "ux::perset",
-
-    }
-  );
-  return result
+  const result = await getClientSettings({
+    ns: "ux::perset",
+  });
+  return result;
 };

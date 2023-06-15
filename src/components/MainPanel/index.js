@@ -27,7 +27,7 @@ import {
 
 const initConfig = () => ({
   sw_version: getSoftwareVersion(),
-  coverage: 1,
+  coverage: 100,
   models: getModels(),
   areaIds: getAreaIds(),
   not_before: Math.floor(Date.now() / 1000),
@@ -44,12 +44,20 @@ function MainPanel({ presetList, selectedPreset }) {
   const [errorMessages, setErrorMessages] = useState([]);
 
   const location = useLocation();
-  // if (presetList && presetList.key) {
+  // if (presetList && presetList.key)
+
   //   setConfig((prevState) => ({
   //     ...prevState,
   //     config: JSON.parse(selectedPreset.value),
   //   }));
   // }
+  useEffect((preset) => {
+    if (preset && preset.key) {
+      console.log("got a preset2", preset);
+
+      setConfig(JSON.parse(preset.value));
+    }
+  }, []);
 
   useEffect(() => {
     const data = location.state;
@@ -66,10 +74,9 @@ function MainPanel({ presetList, selectedPreset }) {
   // }, []);
 
   const onPercentageChange = (evt) => {
-    const { value } = evt.target;
     setConfig((prevState) => ({
       ...prevState,
-      coverage: value / 100,
+      coverage: evt.target.value,
     }));
   };
   // const onCityChange = (selectedCities) => {
@@ -110,7 +117,11 @@ function MainPanel({ presetList, selectedPreset }) {
   const validateConfig = () => {
     const errors = [];
 
-    if (isNaN(config.coverage) || config.coverage < 0 || config.coverage > 1) {
+    if (
+      isNaN(config.coverage) ||
+      config.coverage < 0 ||
+      config.coverage > 100
+    ) {
       errors.push(
         "- Invalid coverage percentage. Please enter a value between 0 and 100."
       );
@@ -139,7 +150,7 @@ function MainPanel({ presetList, selectedPreset }) {
     }
   };
 
-  const coverage = config.coverage * 100;
+  const coverage = config.coverage;
   const areaIds = config.areaIds;
   const models = config.models;
   const targetedDeviceNum = getNumberOfDevices(areaIds, models);
