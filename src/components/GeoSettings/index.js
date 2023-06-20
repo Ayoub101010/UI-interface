@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./GeoSettings.css";
 import { getCities } from "../../services/dataUtils";
 
 function GeoSettings({ selectedAreaIds, onCityChange }) {
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
   const cities = getCities();
   const handleCityChange = (event) => {
     const selectedAreaId = event.target.name;
@@ -48,6 +53,36 @@ function GeoSettings({ selectedAreaIds, onCityChange }) {
           ))}
         </div>
       </div>
+
+      <section>
+        <div className=" radio-button">
+          <label className="yes">
+            &nbsp;&nbsp;
+            <input
+              type="radio"
+              name="option1q"
+              value="Select"
+              className="radio-but"
+              checked={selectedOption === "Select"}
+              onChange={handleOptionChange}
+            />
+            &nbsp;&nbsp; Select all cities
+          </label>
+          <br />
+          <label className="No">
+            &nbsp;&nbsp;
+            <input
+              type="radio"
+              name="option2"
+              value="Diselect"
+              className="radio-but"
+              checked={selectedOption === "Diselect"}
+              onChange={handleOptionChange}
+            />
+            &nbsp;&nbsp; Diselect all cities
+          </label>
+        </div>
+      </section>
     </section>
   );
 }
