@@ -24,8 +24,8 @@ function ModelSettings({ onModelChange, selectedModels }) {
 
   return (
     <section>
-      <div className="square">
-        <div className="rect">Included STB Models</div>
+      <div className="square2">
+        <div className="rect2">Included STB Models</div>
         <br />
         {models.map((model, index) => (
           <React.Fragment key={model.id}>

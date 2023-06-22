@@ -95,7 +95,7 @@ function ScheduleSettings({ onScheduleChange }) {
     <section>
       <div className="Square4">
         <div className="rect4">Scheduled Update Time</div>
-        <br />
+       <br></br>
         <label className="radio-label">
           &nbsp;&nbsp;
           <input
@@ -108,7 +108,6 @@ function ScheduleSettings({ onScheduleChange }) {
           />{" "}
           As soon as DVB-SSU received
         </label>
-        <br />
         <br />
         <label className="radio-label">
           &nbsp;&nbsp;

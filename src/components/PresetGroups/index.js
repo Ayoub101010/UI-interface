@@ -20,6 +20,7 @@ function PresetGroups({ onSavePreset }) {
         <div className="rect6">
           Save current config settings as new Preset Group
         </div>
+     
         <p>&nbsp;&nbsp;Enter name for saving new Preset Group </p>
         <br></br>
         <input

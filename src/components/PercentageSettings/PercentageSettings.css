@@ -14,17 +14,22 @@
 }
 .rect {
   width: 299px;
-  height: 26px;
-  background-color: rgba(65, 154, 65, 0.918);
+  height: 50px;
+  background: rgb(42, 169, 42);
   color: white;
-  font-family: "Bahnschrift SemiBold";
-  padding-left: 10px;
-  padding-top: 5px;
+  font-family: 20px "Arial";
+  font-size: 20px;
+  margin-top: 0px;
+  padding-left: 30px;
+  padding-top: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 1px 1px rgba(98, 95, 95, 0.817);
 }
 #inp1 {
   height: 27px;
-  width: 184px;
-  background-color: #adadad;
+  width: 150px;
+  background-color: #ffffff;
   font-family: "Bahnschrift SemiBold";
   margin-left: 10px;
 }

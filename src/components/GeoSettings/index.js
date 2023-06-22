@@ -21,7 +21,7 @@ function GeoSettings({ selectedAreaIds, onCityChange }) {
   return (
     <section>
       <div className="square">
-        <div className="rect">Included Cities</div>
+        <div className="rect3">Included Cities</div>
         <br />
         <div className="square-wrapper">
           {cities.map((city, index) => (

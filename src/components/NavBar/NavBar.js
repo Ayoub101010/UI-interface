@@ -41,8 +41,8 @@ function NavBar() {
               }}
             >
               <img
-                src={process.env.PUBLIC_URL + "/LOGOr.png"}
-                style={{ position: "absolute", top: "15px" }}
+                src={process.env.PUBLIC_URL + "/LogoOREGAN.png"}
+                style={{ position: "absolute", top: "3px" }}
               />
             </li>
           </ul>

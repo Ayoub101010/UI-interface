@@ -49,12 +49,13 @@ function ReviewUpdates({ onDelete }) {
 
   return (
     <div>
-      <h2 className="RSU">Review Scheduled Updates</h2>
+      <h2 className="fade-in" id="RSU">Review Scheduled Updates</h2>
       <br></br>
+    
       <Table striped bordered hover className="Tbl">
         <thead className="Thead">
           <tr>
-            <th colSpan="6">Phased SSU Rollout</th>
+            <th className="titre"colSpan="6">Phased SSU Rollout</th>
           </tr>
           <tr>
             <th>Dates</th>

@@ -1,34 +1,42 @@
 .square6 {
-  width: 400px;
+  width: 480px;
   height: 120px;
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
   font-family: "Bahnschrift";
   margin-left: -1350px;
-  margin-top: 360px;
+  margin-top: 320px;
   border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px 2px rgba(98, 95, 95, 0.817);
 }
 .rect6 {
-  width: 398, 8px;
-  height: 26px;
-  background-color: rgba(65, 154, 65, 0.918);
+  width: 478px;
+  height: 40px;
+  background: rgb(42, 169, 42);
   color: white;
-  font-family: "Bahnschrift SemiBold";
+  font-family: 20px "Arial";
+  font-size: 20px;
+  margin-top: 0px;
   padding-left: 10px;
-  padding-top: 5px;
+  padding-top: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 1px 1px rgba(98, 95, 95, 0.817);
 }
 #inp2 {
   height: 29px;
-  width: 240px;
-  background-color: #adadad;
+  width: 300px;
+  background-color: #ffffff;
   font-family: "Bahnschrift SemiBold";
   margin-top: -30px;
   margin-left: 10px;
+
 }
 #Btn {
   border-radius: 3px;
   margin-right: 15px;
-  width: 120px;
+  width: 140px;
   height: 30px;
   font-family: "Bahnschrift SemiBold";
   float: right;

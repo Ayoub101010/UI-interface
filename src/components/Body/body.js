@@ -29,7 +29,8 @@ function Body() {
   return (
     <>
       <section>
-        <h2>Phased SSU Rollout</h2>
+        <br></br>
+        <h2 className="fade-in">Phased SSU Rollout</h2>
         <br></br>
         <div style={{ display: "flex" }}>
           <p id="Dep-Rel">Deploying Release :</p>
@@ -47,7 +48,14 @@ function Body() {
               </React.Fragment>
             {presetList.map((preset) => (
               <React.Fragment key={preset.key}>
+<<<<<<< HEAD
                 <option value={preset.key}>
+=======
+                 <option disabled selected>
+                
+                </option>
+                <option value={preset.key} selected>
+>>>>>>> a8c15db (developing the design of th UI)
                 {preset.key}
                 </option>
               </React.Fragment>

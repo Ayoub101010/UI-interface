@@ -11,27 +11,31 @@ a:hover {
   color: whitesmoke;
 }
 
+
 ul {
-  font-family: "Bahnschrift";
+  font-family: "Arial";
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #adadad;
+  background: linear-gradient(to right,rgb(42, 169, 42), #2d5787);
+  height: 60px;
+  box-shadow: 7px 7px 5px rgb(98, 95, 95);
 }
 
 li {
   float: left;
   margin-left: 10px;
+  margin-top: 5px;
 }
 li:hover a {
-  border-bottom: 3px solid rgb(42, 169, 42);
+  border-bottom: 3px solid rgb(235, 237, 235);
   padding-bottom: 5px;
   border-radius: 3px;
 }
 li a {
   display: block;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;

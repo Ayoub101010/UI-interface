@@ -1,7 +1,9 @@
-.Thead {
-  background-color: rgba(65, 154, 65, 0.918);
+thead {
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
   color: white;
   font-family: "Bahnschrift SemiBold";
+  
 }
 .btnB {
   height: 30px;
@@ -14,30 +16,37 @@
   margin-left: 20px;
   background-color: rgb(47, 148, 69);
   color: white;
-  font-family: "Bahnschrift SemiBold";
+  font-family: "Bahnschrift ";
   border-color: rgb(47, 148, 69);
 }
 
 .Tbody {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
-  font-family: "Bahnschrift";
+  font-family: "Bahnschrift SemiBold";
 }
 .Tbl {
   width: 1200px;
   margin-left: 100px;
+  font-family: "Bahnschrift SemiBold";
 }
-.RSU {
-  margin-left: 100px;
+#RSU {
+  font-family: "Arial"  ;
+  color: rgb(82, 163, 64);
+  margin-left: 38px;
   margin-top: 30px;
 }
 .btnA:hover {
   background-color: rgb(57, 137, 33);
   border-color: rgb(57, 137, 33);
+  font-family: "Bahnschrift SemiBold";
 }
 thead tr th:last-child {
-
   width: 240px;
+}
+thead tr{
+   text-align: center;
+  background: linear-gradient(to right,#418121,rgb(42, 169, 42), #418121);
 }
 
   .hover-link {
@@ -66,5 +75,29 @@ thead tr th:last-child {
   .hover-container:hover .hover-box {
     display: block;
   }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+
   
+  .fade-in {
+    animation: fade-in 1s;
+   
+  }
+  thead .titre{
+   
+    background: linear-gradient(to right,#418121,rgb(42, 169, 42), #418121);
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    text-align: center;
+    font-size: 20px;
+    font-family: "Bahnschrift SemiBold";
+   
+  }
 
