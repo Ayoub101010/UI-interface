@@ -39,7 +39,7 @@ export const getModels = () => {
 };
 
 export const getSoftwareVersion = () => {
-  const softwareVersion = "126";
+  const softwareVersion = "1.2.6";
   return softwareVersion;
 };
 

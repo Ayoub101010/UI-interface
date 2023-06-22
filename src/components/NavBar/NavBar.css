@@ -11,14 +11,13 @@ a:hover {
   color: whitesmoke;
 }
 
-
 ul {
   font-family: "Arial";
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: linear-gradient(to right,rgb(42, 169, 42), #2d5787);
+  background: linear-gradient(to right, rgb(42, 169, 42), #2d5787);
   height: 60px;
   box-shadow: 7px 7px 5px rgb(98, 95, 95);
 }
@@ -28,8 +27,10 @@ li {
   margin-left: 10px;
   margin-top: 5px;
 }
-li:hover a {
-  border-bottom: 3px solid rgb(235, 237, 235);
+
+li:hover a,
+.selected a {
+  border-bottom: 3px solid rgb(42, 169, 42);
   padding-bottom: 5px;
   border-radius: 3px;
 }

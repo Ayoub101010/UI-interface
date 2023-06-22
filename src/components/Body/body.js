@@ -18,14 +18,13 @@ function Body() {
     load();
   }, []);
 
- const onSelectPresetChange = (evt) => {
-  console.log('preset', evt.target.value);
-  const result = presetList.filter((p)=> p.key === evt.target.value)
-  if (result && result.length > 0) {
-    setSelectedPreset(result[0])
-  }
-
- }
+  const onSelectPresetChange = (evt) => {
+    console.log("preset", evt.target.value);
+    const result = presetList.filter((p) => p.key === evt.target.value);
+    if (result && result.length > 0) {
+      setSelectedPreset(result[0]);
+    }
+  };
   return (
     <>
       <section>
@@ -42,21 +41,13 @@ function Body() {
           />
           <select className="Group" onChange={onSelectPresetChange}>
             <React.Fragment key="">
-                <option value="">
-                Use existing preset group
-                </option>
-              </React.Fragment>
+              <option value="">Use existing preset group</option>
+            </React.Fragment>
             {presetList.map((preset) => (
               <React.Fragment key={preset.key}>
-<<<<<<< HEAD
-                <option value={preset.key}>
-=======
-                 <option disabled selected>
-                
-                </option>
+                <option disabled selected></option>
                 <option value={preset.key} selected>
->>>>>>> a8c15db (developing the design of th UI)
-                {preset.key}
+                  {preset.key}
                 </option>
               </React.Fragment>
             ))}

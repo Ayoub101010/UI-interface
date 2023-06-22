@@ -7,12 +7,14 @@ import { getConfigsFromProperties } from "../../services/policyUtils";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getAreaName } from "../../services/dataUtils";
+import Modal from "../DeletionModal/index";
 
 function ReviewUpdates({ onDelete }) {
   const [hoverIndex, setHoverIndex] = useState(-1);
   const [configs, setConfigs] = useState([]);
   const [props, setProps] = useState([]);
   const navigate = useNavigate();
+  const [confirmModalShown, setConfirmModalShown] = useState(false);
 
   useEffect(() => {
     const prepareConfigs = async () => {
@@ -42,10 +44,20 @@ function ReviewUpdates({ onDelete }) {
     });
     setConfigs(configs.filter((c) => c.tag !== config.tag));
     setProps(props.filter((p) => p.tag !== config.tag));
+    setConfirmModalShown(false);
   };
   const handleClick = (config) => {
     navigate("/ux", { state: config });
   };
+  const handleConfirm = () => {
+    console.log("confirm");
+    showConfirmModal();
+  };
+
+  const closeConfirmModal = () => {
+    setConfirmModalShown(false);
+  };
+  const showConfirmModal = () => setConfirmModalShown(true);
 
   return (
     <div>
@@ -109,10 +121,16 @@ function ReviewUpdates({ onDelete }) {
                 <Button
                   className="btnB"
                   variant="danger"
-                  onClick={() => handleDelete(config)}
+                  onClick={handleConfirm}
                 >
                   Delete
                 </Button>
+                <Modal
+                  centered
+                  show={confirmModalShown}
+                  onHide={closeConfirmModal}
+                  onConfirm={() => handleDelete(config)}
+                />
               </td>
             </tr>
           ))}

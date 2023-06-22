@@ -7,6 +7,11 @@ import "./NavBar.css";
 import { initSettings } from "../../services/dataUtils";
 
 function NavBar() {
+  const [selectedPage, setSelectedPage] = useState("");
+
+  const handlePageClick = (page) => {
+    setSelectedPage(page);
+  };
   useEffect(() => {
     const init = async () => {
       await initSettings();
@@ -18,19 +23,34 @@ function NavBar() {
       <header>
         <nav>
           <ul>
-            <li>
+            <li
+              className={selectedPage === "Phased" ? "selected" : ""}
+              onClick={() => handlePageClick("Phased")}
+            >
               <Link to="/ux">Phased SSU Rollout</Link>
             </li>
-            <li>
+            <li
+              className={selectedPage === "ADA" ? "selected" : ""}
+              onClick={() => handlePageClick("ADA")}
+            >
               <Link to="/ux/ada">ADA Management</Link>
             </li>
-            <li>
+            <li
+              className={selectedPage === "ADI" ? "selected" : ""}
+              onClick={() => handlePageClick("ADI")}
+            >
               <Link to="/ux/adi">ADI Management</Link>
             </li>
-            <li>
+            <li
+              className={selectedPage === "Review" ? "selected" : ""}
+              onClick={() => handlePageClick("Review")}
+            >
               <Link to="/ux/review">Review Scheduled Updates</Link>
             </li>
-            <li>
+            <li
+              className={selectedPage === "Log" ? "selected" : ""}
+              onClick={() => handlePageClick("Log")}
+            >
               <Link to="/ux/history">Log History</Link>
             </li>
             <li
